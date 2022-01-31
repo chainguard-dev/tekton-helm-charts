@@ -6,16 +6,16 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: tekton-pipelines-controller-tenant-access
+  name: tekton-chains-controller-tenant-access
   labels:
-    app.kubernetes.io/component: controller
+    app.kubernetes.io/component: chains
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
 subjects:
   - kind: ServiceAccount
-    name: tekton-pipelines-controller
-    namespace: tekton-pipelines
+    name: tekton-chains-controller
+    namespace: tekton-chains
 roleRef:
   kind: ClusterRole
-  name: tekton-pipelines-controller-tenant-access
+  name: tekton-chains-controller-tenant-access
   apiGroup: rbac.authorization.k8s.io

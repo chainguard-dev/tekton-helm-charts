@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: test-dashboard
+  name: test-dashboard
+spec:
+  containers:
+    - image: radial/busyboxplus:curl
+      name: test-dashboard
+      command: [ "curl" ]
+      args: [ "-I", "tekton-dashboard.tekton-pipelines:9097", "-s", "-o", "/dev/null"]
+  dnsPolicy: ClusterFirst

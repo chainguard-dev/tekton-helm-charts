@@ -2,8 +2,8 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: tekton-pipelines-leader-election
-  namespace: tekton-pipelines
+  name: tekton-chains-leader-election
+  namespace: tekton-chains
   labels:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
