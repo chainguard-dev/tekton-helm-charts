@@ -1,6 +1,6 @@
 apiVersion: v2
-name: tekton
-description: A Helm chart for Tekton
+name: tekton-pipeline
+description: A Helm chart for Tekton pipelines
 
 type: application
 

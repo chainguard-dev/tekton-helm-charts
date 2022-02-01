@@ -14,7 +14,7 @@ metadata:
     app: tekton-pipelines-webhook
     version: "v0.32.1"
   name: tekton-pipelines-webhook
-  namespace: tekton-pipelines
+  namespace: {{ .Values.namespace }}
 spec:
   ports:
     # Define metrics and profiling for them to be accessible within service meshes.
@@ -32,5 +32,4 @@ spec:
   selector:
     app.kubernetes.io/name: webhook
     app.kubernetes.io/component: webhook
-    app.kubernetes.io/instance: default
-    app.kubernetes.io/part-of: tekton-pipelines
+{{- template "tekton.labels" }}

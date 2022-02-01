@@ -4,8 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   name: clustertasks.tekton.dev
   labels:
-    app.kubernetes.io/instance: default
-    app.kubernetes.io/part-of: tekton-pipelines
+{{- template "tekton.labels" }}
     pipeline.tekton.dev/release: "v0.32.1"
     version: "v0.32.1"
 spec:
@@ -62,7 +61,7 @@ spec:
       clientConfig:
         service:
           name: tekton-pipelines-webhook
-          namespace: tekton-pipelines
+          namespace: {{ .Values.namespace }}
 
 # Copyright 2019 The Tekton Authors
 #

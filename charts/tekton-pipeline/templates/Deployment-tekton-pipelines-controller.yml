@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tekton-pipelines-controller
-  namespace: tekton-pipelines
+  namespace: {{ .Values.namespace }}
   labels:
     app.kubernetes.io/name: controller
     app.kubernetes.io/component: controller

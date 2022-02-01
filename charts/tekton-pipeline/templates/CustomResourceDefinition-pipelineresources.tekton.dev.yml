@@ -4,8 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   name: pipelineresources.tekton.dev
   labels:
-    app.kubernetes.io/instance: default
-    app.kubernetes.io/part-of: tekton-pipelines
+{{- template "tekton.labels" }}
     pipeline.tekton.dev/release: "v0.32.1"
     version: "v0.32.1"
 spec:
