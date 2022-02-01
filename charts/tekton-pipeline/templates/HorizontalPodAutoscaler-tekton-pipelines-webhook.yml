@@ -3,7 +3,7 @@ apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
   name: tekton-pipelines-webhook
-  namespace: tekton-pipelines
+  namespace: {{ .Values.namespace }}
   labels:
     app.kubernetes.io/name: webhook
     app.kubernetes.io/component: webhook

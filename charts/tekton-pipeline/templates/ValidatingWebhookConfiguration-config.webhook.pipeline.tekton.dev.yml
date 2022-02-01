@@ -5,15 +5,14 @@ metadata:
   name: config.webhook.pipeline.tekton.dev
   labels:
     app.kubernetes.io/component: webhook
-    app.kubernetes.io/instance: default
-    app.kubernetes.io/part-of: tekton-pipelines
+{{- template "tekton.labels" }}
     pipeline.tekton.dev/release: "v0.32.1"
 webhooks:
   - admissionReviewVersions: ["v1"]
     clientConfig:
       service:
         name: tekton-pipelines-webhook
-        namespace: tekton-pipelines
+        namespace: {{ .Values.namespace }}
     failurePolicy: Fail
     sideEffects: None
     name: config.webhook.pipeline.tekton.dev

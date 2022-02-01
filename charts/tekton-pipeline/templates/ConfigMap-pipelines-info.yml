@@ -1,20 +1,3 @@
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: pipelines-info
-  namespace: tekton-pipelines
-  labels:
-    app.kubernetes.io/instance: default
-    app.kubernetes.io/part-of: tekton-pipelines
-data:
-  # Contains pipelines version which can be queried by external
-  # tools such as CLI. Elevated permissions are already given to
-  # this ConfigMap such that even if we don't have access to
-  # other resources in the namespace we still can have access to
-  # this ConfigMap.
-  version: "v0.32.1"
-
 # Copyright 2020 Tekton Authors LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,3 +11,16 @@ data:
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pipelines-info
+  namespace: {{ .Values.namespace }}
+  labels:
+{{- template "tekton.labels" }}
+data:
+  {{- range $key, $val := .Values.pipelines_info }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+

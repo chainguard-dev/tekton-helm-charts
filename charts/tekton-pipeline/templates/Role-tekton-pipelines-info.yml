@@ -3,10 +3,9 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: tekton-pipelines-info
-  namespace: tekton-pipelines
+  namespace: {{ .Values.namespace }}
   labels:
-    app.kubernetes.io/instance: default
-    app.kubernetes.io/part-of: tekton-pipelines
+{{- template "tekton.labels" }}
 rules:
   # All system:authenticated users needs to have access
   # of the pipelines-info ConfigMap even if they don't
