@@ -1,5 +1,5 @@
 
-namespace: tekton-pipeline
+namespace: tekton-pipelines
 
 # version label
 version: "v0.32.1"
