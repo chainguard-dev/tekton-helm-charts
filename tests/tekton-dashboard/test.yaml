@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - image: radial/busyboxplus:curl
-      name: test-dashboard
+      name: tests-dashboard
       command: [ "curl" ]
       args: [ "-I", "tekton-dashboard.tekton-pipelines:9097", "-s", "-o", "/dev/null"]
   dnsPolicy: ClusterFirst

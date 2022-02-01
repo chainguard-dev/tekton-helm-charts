@@ -6,7 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/component: webhook
 {{ include "tekton.labels" . | indent 4 }}
-    pipeline.tekton.dev/release: {{ .Values.release }}
+    pipeline.tekton.dev/release: {{ .Values.release | quote }}
 webhooks:
   - admissionReviewVersions: ["v1"]
     clientConfig:

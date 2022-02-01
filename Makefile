@@ -29,10 +29,10 @@ upgrade: build
 	helm upgrade -i ${CHART_NAME} ${CHART_DIR}
 
 test_task:
-	kubectl create -f ${CHART_DIR}/templates/tests
+	kubectl create -f ./tests/${CHART_DIR}
 	tkn task ls
 	tkn task describe echo-hello-world
-	kubectl delete -f ${CHART_DIR}/templates/tests
+	kubectl delete ./tests/${CHART_DIR}
 
 fetch_pipelines:
 	rm -rf ./charts/tekton-pipeline/templates/
