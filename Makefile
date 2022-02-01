@@ -1,17 +1,21 @@
-CHART_NAME = tekton-pipeline
+CHART_NAME ?= tekton-pipeline
 CHART_DIR = charts/${CHART_NAME}
 
-PIPELINE_VERSION=v0.32.1
-DASHBOARD_VERSION=v0.24.1
-CHAINS_VERSION=v0.7.0
+# Versions of tekton components
+PIPELINE_VERSION ?= v0.32.1
+DASHBOARD_VERSION ?= v0.24.1
+CHAINS_VERSION ?= v0.7.0
 
+# Testing env var
 KIND_CLUSTER_NAME=tekton-dev
-
 KIND_LOG_LEVEL=6
 
 build:
 	rm -rf ${CHART_DIR}/Chart.lock
 	helm lint ${CHART_DIR}
+
+open_dashboard:
+	$(shell kubectl port-forward svc/tekton-dashboard 9097:9097 -n tekton-pipelines &)
 
 dev_cluster:
 	 kind create cluster \
@@ -28,11 +32,17 @@ install: build
 upgrade: build
 	helm upgrade -i ${CHART_NAME} ${CHART_DIR}
 
+uninstall:
+	helm uninstall ${CHART_NAME}
+
+helm_test:
+	ct install --charts ./charts/tekton-pipeline --config ct.yaml
+
 test_task:
 	kubectl create -f ./tests/${CHART_DIR}
 	tkn task ls
 	tkn task describe echo-hello-world
-	kubectl delete ./tests/${CHART_DIR}
+	kubectl delete -f ./tests/${CHART_DIR}
 
 fetch_pipelines:
 	rm -rf ./charts/tekton-pipeline/templates/
