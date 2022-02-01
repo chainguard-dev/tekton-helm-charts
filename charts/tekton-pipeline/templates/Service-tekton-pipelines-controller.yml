@@ -1,37 +1,4 @@
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app.kubernetes.io/name: controller
-    app.kubernetes.io/component: controller
-    app.kubernetes.io/instance: default
-    app.kubernetes.io/version: {{ .Values.version }}
-    app.kubernetes.io/part-of: tekton-pipelines
-    # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-    pipeline.tekton.dev/release: {{ .Values.release }}
-    # labels below are related to istio and should not be used for resource lookup
-    app: tekton-pipelines-controller
-    version: {{ .Values.version }}
-  name: tekton-pipelines-controller
-  namespace: {{ .Values.namespace }}
-spec:
-  ports:
-    - name: http-metrics
-      port: 9090
-      protocol: TCP
-      targetPort: 9090
-    - name: http-profiling
-      port: 8008
-      targetPort: 8008
-    - name: probes
-      port: 8080
-  selector:
-    app.kubernetes.io/name: controller
-    app.kubernetes.io/component: controller
-{{ include "tekton.labels" . | indent 4 }}
-
-# Copyright 2020 The Tekton Authors
+# Copyright 2020 Tekton Authors LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,3 +11,23 @@ spec:
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+{{ include "tekton.labels" . | indent 4 }}
+    app.kubernetes.io/name: controller
+    app.kubernetes.io/component: controller
+    pipeline.tekton.dev/release: {{ .Values.release | quote }}
+    app: tekton-pipelines-controller
+    version: {{ .Values.version | quote }}
+  name: tekton-pipelines-controller
+  namespace: {{ .Values.namespace }}
+spec:
+  ports:
+{{ .Values.controller_service.ports | toYaml | indent 4 }}
+  selector:
+{{ include "tekton.labelselector" . | indent 4 }}
+    app.kubernetes.io/name: controller
+    app.kubernetes.io/component: controller

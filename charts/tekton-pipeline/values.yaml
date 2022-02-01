@@ -7,7 +7,115 @@ version: "v0.32.1"
 # pipeline.tekton.dev/release Label
 release: "v0.32.1"
 
+deployment:
+  image:
+    repository: "gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/controller"
+    version: "sha256:077cdb806e2e4f2d787066fa426e3f5c57371b5552f777e323b56c68c00f9af0"
+    tag: "v0.32.1"
+  replicas: 1
+  args:
+    - kubeconfig_writer_image:
+      name: "kubeconfig-writer-image"
+      image: "gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/kubeconfigwriter:v0.32.1@sha256:fc663b53693f55592e9639f1b65132cce002f1b50329389524740c32cc314bc3"
+    - git_image:
+      name: "git-image"
+      image: "gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.32.1@sha256:02ffc8b09e575d1ee8cfcc5a82263cea56f3f5fe04ea1082bb06d98b5b83d5e4"
+    - entrypoint_image:
+      name: "entrypoint-image"
+      image: "gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/entrypoint:v0.32.1@sha256:adf4bebbb80953561764a3fd65a83dc060387aadbde02e175aecf5e857b4fde7"
+    - nop_image:
+      name: "nop-image"
+      image: "gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/nop:v0.32.1@sha256:ca21b9d74c05eb94a4059468e0eb794f3b6b8c4f0cf6b1cb6916251adda47ec2"
+    - imagedigest_exporter_image:
+      name: "imagedigest-exporter-image"
+      image: "gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/imagedigestexporter:v0.32.1@sha256:3c4918e581ba5b67db9838ee384012e419eda8fdcd716447d588c33c7073d07b"
+    - pr_image:
+      name: "pr-image"
+      image: "gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/pullrequest-init:v0.32.1@sha256:62c11e60e8d4653a4eab9118e6f761fa7efe3a69e829f8c68d6ebbeb16aaf336"
+    - gsutil_image:
+      name: "gsutil-image"
+      image: "gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:27b2c22bf259d9bc1a291e99c63791ba0c27a04d2db0a43241ba0f1f20f4067f"
+    - shell_image:
+      name: "shell-image"
+      image: "gcr.io/distroless/base@sha256:cfdc553400d41b47fd231b028403469811fcdbc0e69d66ea8030c5a0b5fbac2b"
+    - shell_image_win:
+      name: "shell-image-win"
+      image: "mcr.microsoft.com/powershell:nanoserver@sha256:b6d5ff841b78bdf2dfed7550000fd4f3437385b8fa686ec0f010be24777654d6"
 
+
+#pipeline webhook
+webhook:
+  image:
+    repository: "gcr:io/tekton-releases/github.com/tektoncd/pipeline/cmd/webhook"
+    version: "sha256:3e9beebdc80184231a9e147b20b9e8f15e7445af9b0e05dc6f05ce396c1f8500"
+    tag: "v0.32.1"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      cpu: 500m
+      memory: 500Mi
+  ports:
+    - name: metrics
+      containerPort: 9090
+    - name: profiling
+      containerPort: 8008
+    - name: https-webhook
+      containerPort: 8443
+    - name: probes
+      containerPort: 8080
+  probes:
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: probes
+        scheme: HTTP
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+    readinessProbe:
+      httpGet:
+        path: /readiness
+        port: probes
+        scheme: HTTP
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+
+# webhook autoscaler
+webhook_autoscaler:
+  minReplicas: 1
+  maxReplicas: 5
+
+# controller service
+controller_service:
+  ports:
+    - name: http-metrics
+      port: 9090
+      protocol: TCP
+      targetPort: 9090
+    - name: http-profiling
+      port: 8008
+      targetPort: 8008
+    - name: probes
+      port: 8080
+
+# webhook service
+webhook_service:
+  ports:
+    # Define metrics and profiling for them to be accessible within service meshes.
+    - name: http-metrics
+      port: 9090
+      targetPort: 9090
+    - name: http-profiling
+      port: 8008
+      targetPort: 8008
+    - name: https-webhook
+      port: 443
+      targetPort: 8443
+    - name: probes
+      port: 8080
 # Config Map for config-artifact-bucket
 # https://github.com/tektoncd/pipeline/blob/main/docs/install.md#configuring-a-cloud-storage-bucket
 # data:
