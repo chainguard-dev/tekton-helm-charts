@@ -5,7 +5,7 @@ metadata:
   name: tekton-pipelines-info
   namespace: {{ .Values.namespace }}
   labels:
-{{- template "tekton.labels" }}
+{{ include "tekton.labels" . | indent 4 }}
 rules:
   # All system:authenticated users needs to have access
   # of the pipelines-info ConfigMap even if they don't

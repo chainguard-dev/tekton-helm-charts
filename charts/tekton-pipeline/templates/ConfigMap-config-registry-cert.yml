@@ -18,7 +18,7 @@ metadata:
   name: config-registry-cert
   namespace: {{ .Values.namespace }}
   labels:
-{{- template "tekton.labels" }}
+{{ include "tekton.labels" . | indent 4 }}
 data:
   {{- range $key, $val := .Values.config_registry_cert }}
   {{ $key }}: {{ $val | quote }}

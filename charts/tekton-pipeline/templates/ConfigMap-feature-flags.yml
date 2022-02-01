@@ -18,7 +18,7 @@ metadata:
   name: feature-flags
   namespace: {{ .Values.namespace }}
   labels:
-{{- template "tekton.labels" }}
+{{ include "tekton.labels" . | indent 4 }}
 data:
   {{- range $key, $val := .Values.feature_flags }}
   {{ $key }}: {{ $val | quote }}

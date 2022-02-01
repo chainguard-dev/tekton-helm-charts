@@ -6,13 +6,13 @@ metadata:
     app.kubernetes.io/name: controller
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: default
-    app.kubernetes.io/version: "v0.32.1"
+    app.kubernetes.io/version: {{ .Values.version }}
     app.kubernetes.io/part-of: tekton-pipelines
     # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-    pipeline.tekton.dev/release: "v0.32.1"
+    pipeline.tekton.dev/release: {{ .Values.release }}
     # labels below are related to istio and should not be used for resource lookup
     app: tekton-pipelines-controller
-    version: "v0.32.1"
+    version: {{ .Values.version }}
   name: tekton-pipelines-controller
   namespace: {{ .Values.namespace }}
 spec:
@@ -29,7 +29,7 @@ spec:
   selector:
     app.kubernetes.io/name: controller
     app.kubernetes.io/component: controller
-{{- template "tekton.labels" }}
+{{ include "tekton.labels" . | indent 4 }}
 
 # Copyright 2020 The Tekton Authors
 #

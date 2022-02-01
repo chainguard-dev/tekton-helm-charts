@@ -1,6 +1,13 @@
 
 namespace: tekton-pipeline
 
+# version label
+version: "v0.32.1"
+
+# pipeline.tekton.dev/release Label
+release: "v0.32.1"
+
+
 # Config Map for config-artifact-bucket
 # https://github.com/tektoncd/pipeline/blob/main/docs/install.md#configuring-a-cloud-storage-bucket
 # data:

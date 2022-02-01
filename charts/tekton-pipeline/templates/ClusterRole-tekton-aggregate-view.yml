@@ -17,7 +17,7 @@ kind: ClusterRole
 metadata:
   name: tekton-aggregate-view
   labels:
-    {{- template "tekton.labels" }}
+{{ include "tekton.labels" . | indent 4 }}
     rbac.authorization.k8s.io/aggregate-to-view: "true"
 rules:
   - apiGroups:
