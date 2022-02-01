@@ -5,7 +5,7 @@ metadata:
   name: tekton-pipelines-leader-election
   namespace: {{ .Values.namespace }}
   labels:
-{{- template "tekton.labels" }}
+{{ include "tekton.labels" . | indent 4 }}
 rules:
   # We uses leases for leaderelection
   - apiGroups: ["coordination.k8s.io"]

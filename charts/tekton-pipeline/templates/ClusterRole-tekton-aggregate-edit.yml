@@ -17,9 +17,9 @@ kind: ClusterRole
 metadata:
   name: tekton-aggregate-edit
   labels:
+{{ include "tekton.labels" . | indent 4 }}
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
-{{- template "tekton.labels" . }}
 rules:
   - apiGroups:
       - tekton.dev

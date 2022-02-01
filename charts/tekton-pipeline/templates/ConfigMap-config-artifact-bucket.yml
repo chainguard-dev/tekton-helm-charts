@@ -18,7 +18,7 @@ metadata:
   name: config-artifact-bucket
   namespace: {{ .Values.namespace }}
   labels:
-    {{- template "tekton.labels" }}
+{{ include "tekton.labels" . | indent 4 }}
 data:
   {{- range $key, $val := .Values.config_artifact_bucket }}
   {{ $key }}: {{ $val | quote }}

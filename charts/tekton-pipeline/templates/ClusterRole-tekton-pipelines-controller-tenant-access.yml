@@ -19,7 +19,7 @@ metadata:
   name: tekton-pipelines-controller-tenant-access
   labels:
     app.kubernetes.io/component: controller
-    {{- template "tekton.labels" }}
+{{ include "tekton.labels" . | indent 4 }}
 rules:
   # Read-write access to create Pods and PVCs (for Workspaces)
   - apiGroups: [""]

@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app.kubernetes.io/component: controller
-{{- template "tekton.labels" }}
+{{ include "tekton.labels" . | indent 4 }}
 subjects:
   - kind: ServiceAccount
     name: tekton-pipelines-controller

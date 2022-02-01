@@ -8,12 +8,12 @@ metadata:
     app.kubernetes.io/name: controller
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: default
-    app.kubernetes.io/version: "v0.32.1"
+    app.kubernetes.io/version: {{ .Values.version }}
     app.kubernetes.io/part-of: tekton-pipelines
     # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-    pipeline.tekton.dev/release: "v0.32.1"
+    pipeline.tekton.dev/release: {{ .Values.release }}
     # labels below are related to istio and should not be used for resource lookup
-    version: "v0.32.1"
+    version: {{ .Values.version }}
 spec:
   replicas: 1
   selector:
@@ -28,13 +28,13 @@ spec:
         app.kubernetes.io/name: controller
         app.kubernetes.io/component: controller
         app.kubernetes.io/instance: default
-        app.kubernetes.io/version: "v0.32.1"
+        app.kubernetes.io/version: {{ .Values.version }}
         app.kubernetes.io/part-of: tekton-pipelines
         # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-        pipeline.tekton.dev/release: "v0.32.1"
+        pipeline.tekton.dev/release: {{ .Values.release }}
         # labels below are related to istio and should not be used for resource lookup
         app: tekton-pipelines-controller
-        version: "v0.32.1"
+        version: {{ .Values.version }}
     spec:
       affinity:
         nodeAffinity:

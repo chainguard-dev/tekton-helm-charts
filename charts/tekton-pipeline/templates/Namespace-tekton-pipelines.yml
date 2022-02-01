@@ -16,7 +16,7 @@ kind: Namespace
 metadata:
   name: tekton-pipelines
   labels:
-{{- template "tekton.labels" }}
+{{ include "tekton.labels" . | indent 4 }}
 
 # Copyright 2019 The Tekton Authors
 #
