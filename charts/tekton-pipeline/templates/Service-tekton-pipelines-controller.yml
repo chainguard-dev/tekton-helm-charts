@@ -19,11 +19,11 @@ metadata:
 {{ include "tekton.labels" . | indent 4 }}
     app.kubernetes.io/name: controller
     app.kubernetes.io/component: controller
-    pipeline.tekton.dev/release: {{ .Values.release | quote }}
+    pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
     app: tekton-pipelines-controller
-    version: {{ .Values.version | quote }}
+    version: {{ .Chart.AppVersion | quote }}
   name: tekton-pipelines-controller
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   ports:
 {{ .Values.controller_service.ports | toYaml | indent 4 }}

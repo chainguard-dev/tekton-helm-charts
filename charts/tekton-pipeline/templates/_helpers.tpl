@@ -15,17 +15,17 @@ app.kubernetes.io/part-of: tekton-pipelines
 {{/*
 Create the image path for the passed in image field
 */}}
-{{- define "deployment.image" -}}
+{{- define "pipeline_deployment.image" -}}
 {{- printf "%s:%s@%s" .repository .tag .version -}}
 {{- end -}}
 
-{{- define "webhook.image" -}}
+{{- define "pipelines_webhook.image" -}}
 {{- printf "%s:%s@%s" .repository .tag .version -}}
 {{- end -}}
 
-{{- define "deployment.argsImages" -}}
+{{- define "pipeline_deployment.argsImages" -}}
 {{- $list := list -}}
-{{- range $k, $v := .Values.deployment.args -}}
+{{- range $k, $v := .Values.pipeline_deployment.args -}}
 {{- $list = append $list (printf "\"-%s\",\"%s\"" $v.name $v.image) -}}
 {{- end -}}
 {{ join ", " $list }}

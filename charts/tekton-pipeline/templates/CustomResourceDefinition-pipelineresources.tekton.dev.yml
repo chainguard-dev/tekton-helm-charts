@@ -18,8 +18,8 @@ metadata:
   name: pipelineresources.tekton.dev
   labels:
 {{ include "tekton.labels" . | indent 4 }}
-    pipeline.tekton.dev/release: {{ .Values.release | quote }}
-    version: {{ .Values.version | quote }}
+    pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
+    version: {{ .Chart.AppVersion | quote }}
 spec:
   group: tekton.dev
   versions:

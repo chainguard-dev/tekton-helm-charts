@@ -16,15 +16,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tekton-pipelines-controller
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: controller
     app.kubernetes.io/component: controller
 {{ include "tekton.labels" . | indent 4 }}
-    pipeline.tekton.dev/release: {{ .Values.release | quote }}
-    version: {{ .Values.version | quote }}
+    pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
+    version: {{ .Chart.AppVersion | quote }}
 spec:
-  replicas: {{ .Values.deployment.replicas }}
+  replicas: {{ .Values.pipeline_deployment.replicas }}
   selector:
     matchLabels:
       app.kubernetes.io/name: controller
@@ -36,9 +36,9 @@ spec:
 {{ include "tekton.labels" . | indent 8 }}
         app.kubernetes.io/name: controller
         app.kubernetes.io/component: controller
-        pipeline.tekton.dev/release: {{ .Values.release | quote }}
+        pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
         app: tekton-pipelines-controller
-        version: {{ .Values.version | quote }}
+        version: {{ .Chart.AppVersion | quote }}
     spec:
       affinity:
         nodeAffinity:
@@ -52,9 +52,9 @@ spec:
       serviceAccountName: tekton-pipelines-controller
       containers:
         - name: tekton-pipelines-controller
-          image: {{ template "deployment.image" .Values.deployment.image   }}
+          image: {{ template "pipeline_deployment.image" .Values.pipeline_deployment.image   }}
           args: [
-            {{ template "deployment.argsImages" . }}
+            {{ template "pipeline_deployment.argsImages" . }}
           ]
           volumeMounts:
             - name: config-logging

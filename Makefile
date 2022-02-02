@@ -35,8 +35,11 @@ upgrade: build
 uninstall:
 	helm uninstall ${CHART_NAME}
 
-helm_test:
+helm_install:
 	ct install --charts ./charts/tekton-pipeline --config ct.yaml
+
+helm_lint:
+	ct lint --config ct.yaml
 
 test_task:
 	kubectl create -f ./tests/${CHART_DIR}

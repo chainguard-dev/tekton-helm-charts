@@ -6,13 +6,13 @@ metadata:
   # config/400-webhook-service.yaml. If you change this name, you must also
   # change the value of WEBHOOK_SERVICE_NAME below.
   name: tekton-pipelines-webhook
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
   labels:
 {{ include "tekton.labels" . | indent 4 }}
     app.kubernetes.io/name: webhook
     app.kubernetes.io/component: webhook
-    pipeline.tekton.dev/release: {{ .Values.release | quote }}
-    version: {{ .Values.version | quote }}
+    pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
+    version: {{ .Chart.AppVersion | quote }}
 spec:
   replicas: 1
   selector:
@@ -26,9 +26,9 @@ spec:
         app.kubernetes.io/name: webhook
         app.kubernetes.io/component: webhook
 {{ include "tekton.labels" . | indent 8 }}
-        pipeline.tekton.dev/release: {{ .Values.release | quote }}
+        pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
         app: tekton-pipelines-webhook
-        version: {{ .Values.version | quote }}
+        version: {{ .Chart.AppVersion | quote }}
     spec:
       affinity:
         nodeAffinity:
@@ -46,14 +46,13 @@ spec:
                   matchLabels:
                     app.kubernetes.io/name: webhook
                     app.kubernetes.io/component: webhook
-                    app.kubernetes.io/instance: default
-                    app.kubernetes.io/part-of: tekton-pipelines
+{{ include "tekton.labels" . | indent 20 }}
                 topologyKey: kubernetes.io/hostname
               weight: 100
       serviceAccountName: tekton-pipelines-webhook
       containers:
         - name: webhook
-          image: {{ template "webhook.image" .Values.webhook.image }}
+          image: {{ template "pipelines_webhook.image" .Values.webhook.image }}
           resources:
 {{ .Values.webhook.resources | toYaml | indent 12 }}
           env:
