@@ -16,13 +16,13 @@ apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
   name: tekton-pipelines-webhook
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: webhook
     app.kubernetes.io/component: webhook
 {{ include "tekton.labels" . | indent 4 }}
-    pipeline.tekton.dev/release: {{ .Values.release | quote }}
-    version: {{ .Values.version | quote }}
+    pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
+    version: {{ .Chart.AppVersion | quote }}
 spec:
   minReplicas: {{ .Values.webhook_autoscaler.minReplicas}}
   maxReplicas: {{ .Values.webhook_autoscaler.maxReplicas }}

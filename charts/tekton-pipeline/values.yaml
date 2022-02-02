@@ -1,15 +1,7 @@
-namespace: tekton-pipelines
-
-# version label
-version: "v0.32.1"
-
-# pipeline.tekton.dev/release Label
-release: "v0.32.1"
-
-deployment:
+pipeline_deployment:
   image:
     repository: "gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/controller"
-    version: "sha256:077cdb806e2e4f2d787066fa426e3f5c57371b5552f777e323b56c68c00f9af0"
+    digest: "sha256:077cdb806e2e4f2d787066fa426e3f5c57371b5552f777e323b56c68c00f9af0"
     tag: "v0.32.1"
   replicas: 1
   args:

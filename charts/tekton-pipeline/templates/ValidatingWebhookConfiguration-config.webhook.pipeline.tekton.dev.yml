@@ -19,13 +19,13 @@ metadata:
   labels:
     app.kubernetes.io/component: webhook
 {{ include "tekton.labels" . | indent 4 }}
-    pipeline.tekton.dev/release: {{ .Values.release | quote }}
+    pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
 webhooks:
   - admissionReviewVersions: ["v1"]
     clientConfig:
       service:
         name: tekton-pipelines-webhook
-        namespace: {{ .Values.namespace }}
+        namespace: {{ .Release.Namespace }}
     failurePolicy: Fail
     sideEffects: None
     name: config.webhook.pipeline.tekton.dev

@@ -6,11 +6,11 @@ metadata:
     app.kubernetes.io/name: webhook
     app.kubernetes.io/component: webhook
 {{ include "tekton.labels" . | indent 4 }}
-    pipeline.tekton.dev/release: {{ .Values.release | quote }}
+    pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
     app: tekton-pipelines-webhook
-    version: {{ .Values.version | quote }}
+    version: {{ .Chart.AppVersion | quote }}
   name: tekton-pipelines-webhook
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   ports:
 {{ .Values.webhook_service.ports | toYaml | indent 4 }}
