@@ -26,6 +26,9 @@ dev_cluster:
 	  echo "Kubernetes cluster:" \
       kubectl get nodes -o wide
 
+delete_cluster:
+	kind delete cluster --name ${KIND_CLUSTER_NAME}
+
 install: build
 	helm install ${CHART_NAME} ${CHART_DIR}
 
