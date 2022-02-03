@@ -25,6 +25,9 @@ dev_cluster:
 install: build
 	helm install ${CHART_NAME} ${CHART_DIR}
 
+uninstall: build
+	helm uninstall ${CHART_NAME}
+
 upgrade: build
 	helm upgrade -i ${CHART_NAME} ${CHART_DIR}
 
