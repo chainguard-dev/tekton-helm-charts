@@ -20,7 +20,7 @@ metadata:
   labels:
     app.kubernetes.io/name: controller
     app.kubernetes.io/component: controller
-{{ include "tekton.labels" . | indent 4 }}
+{{ include "tekton_pipelines.labels" . | indent 4 }}
     pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
     version: {{ .Chart.AppVersion | quote }}
 spec:
@@ -29,11 +29,11 @@ spec:
     matchLabels:
       app.kubernetes.io/name: controller
       app.kubernetes.io/component: controller
-{{ include "tekton.labelselector" . | indent 6 }}
+{{ include "tekton_pipelines.labelselector" . | indent 6 }}
   template:
     metadata:
       labels:
-{{ include "tekton.labels" . | indent 8 }}
+{{ include "tekton_pipelines.labels" . | indent 8 }}
         app.kubernetes.io/name: controller
         app.kubernetes.io/component: controller
         pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}

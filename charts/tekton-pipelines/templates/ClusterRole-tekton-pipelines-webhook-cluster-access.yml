@@ -18,7 +18,7 @@ metadata:
   name: tekton-pipelines-webhook-cluster-access
   labels:
     app.kubernetes.io/component: webhook
-{{ include "tekton.labels" . | indent 4 }}
+{{ include "tekton_pipelines.labels" . | indent 4 }}
 rules:
   # The webhook needs to be able to get and update customresourcedefinitions,
   # mainly to update the webhook certificates.

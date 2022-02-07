@@ -19,7 +19,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/component: webhook
-{{ include "tekton.labels" . | indent 4 }}
+{{ include "tekton_pipelines.labels" . | indent 4 }}
 rules:
   - apiGroups: [""]
     resources: ["configmaps"]

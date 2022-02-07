@@ -17,7 +17,7 @@ kind: CustomResourceDefinition
 metadata:
   name: pipelineruns.tekton.dev
   labels:
-{{ include "tekton.labels" . | indent 4 }}
+{{ include "tekton_pipelines.labels" . | indent 4 }}
     pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
     version: {{ .Chart.AppVersion | quote }}
 spec:

@@ -8,7 +8,7 @@ metadata:
   name: tekton-pipelines-webhook
   namespace: {{ .Release.Namespace }}
   labels:
-{{ include "tekton.labels" . | indent 4 }}
+{{ include "tekton_pipelines.labels" . | indent 4 }}
     app.kubernetes.io/name: webhook
     app.kubernetes.io/component: webhook
     pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
@@ -19,13 +19,13 @@ spec:
     matchLabels:
       app.kubernetes.io/name: webhook
       app.kubernetes.io/component: webhook
-{{ include "tekton.labelselector" . | indent 6 }}
+{{ include "tekton_pipelines.labelselector" . | indent 6 }}
   template:
     metadata:
       labels:
         app.kubernetes.io/name: webhook
         app.kubernetes.io/component: webhook
-{{ include "tekton.labels" . | indent 8 }}
+{{ include "tekton_pipelines.labels" . | indent 8 }}
         pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
         app: tekton-pipelines-webhook
         version: {{ .Chart.AppVersion | quote }}
@@ -46,7 +46,7 @@ spec:
                   matchLabels:
                     app.kubernetes.io/name: webhook
                     app.kubernetes.io/component: webhook
-{{ include "tekton.labels" . | indent 20 }}
+{{ include "tekton_pipelines.labels" . | indent 20 }}
                 topologyKey: kubernetes.io/hostname
               weight: 100
       serviceAccountName: tekton-pipelines-webhook

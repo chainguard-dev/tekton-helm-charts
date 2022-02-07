@@ -18,7 +18,7 @@ metadata:
   name: tekton-pipelines-info
   namespace: {{ .Release.Namespace }}
   labels:
-{{ include "tekton.labels" . | indent 4 }}
+{{ include "tekton_pipelines.labels" . | indent 4 }}
 subjects:
   # Giving all system:authenticated users the access of the
   # ConfigMap which contains version information.
