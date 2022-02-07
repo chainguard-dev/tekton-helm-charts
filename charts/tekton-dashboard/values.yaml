@@ -8,4 +8,3 @@ dashboard_deployment:
       digest: "sha256:fe4febbb74ca3e7027c29719e32e38074b3af6be588ee08cca5826f21fa003a1"
       tag: "v0.24.1"
     port: 9097
-

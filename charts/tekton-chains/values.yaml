@@ -1,1 +1,49 @@
 icon: https://github.com/tektoncd/chains/blob/main/tekton_chains-color.png
+
+
+chains_deployment:
+  replicas: 1
+  container:
+    image:
+      registry: "gcr.io/tekton-releases/github.com/tektoncd/chains/cmd/controller"
+      tag: "v0.7.0"
+      digest: "sha256:7a4407056f73435bd869d0292ebdb788a99f22f26f4eb0dab59c6bcf7fd16fb6"
+
+tenant_logging:
+  # Common configuration for all knative codebase
+  zap-logger-config: |
+    {
+      "level": "info",
+      "development": false,
+      "sampling": {
+        "initial": 100,
+        "thereafter": 100
+      },
+      "outputPaths": ["stdout"],
+      "errorOutputPaths": ["stderr"],
+      "encoding": "json",
+      "encoderConfig": {
+        "timeKey": "ts",
+        "levelKey": "level",
+        "nameKey": "logger",
+        "callerKey": "caller",
+        "messageKey": "msg",
+        "stacktraceKey": "stacktrace",
+        "lineEnding": "",
+        "levelEncoder": "",
+        "timeEncoder": "iso8601",
+        "durationEncoder": "",
+        "callerEncoder": ""
+      }
+    }
+  # Log level overrides
+  loglevel.controller: "info"
+  loglevel.webhook: "info"
+
+tenantconfig:
+  artifacts.taskrun.format: tekton
+  artifacts.taskrun.storage: tekton
+  artifacts.taskrun.signer: x509
+  artifacts.oci.storage: oci
+  artifacts.oci.format: simplesigning
+  artifacts.oci.signer: x509
