@@ -9,7 +9,7 @@ metadata:
     pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
     app: tekton-pipelines-webhook
     version: {{ .Chart.AppVersion | quote }}
-  name: tekton-pipelines-webhook
+  name: {{ template "tekton_pipelines.fullname". }}-webhook
   namespace: {{ .Release.Namespace }}
 spec:
   ports:

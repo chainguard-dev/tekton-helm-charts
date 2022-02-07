@@ -15,7 +15,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: tekton-aggregate-view
+  name: {{ template "tekton_pipelines.fullname". }}-aggregate-view
   labels:
 {{ include "tekton_pipelines.labels" . | indent 4 }}
     rbac.authorization.k8s.io/aggregate-to-view: "true"

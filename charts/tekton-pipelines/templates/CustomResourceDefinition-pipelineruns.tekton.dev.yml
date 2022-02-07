@@ -15,13 +15,13 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: pipelineruns.tekton.dev
+  name: pipelineruns.tekton.{{ .Release.Namespace}}
   labels:
 {{ include "tekton_pipelines.labels" . | indent 4 }}
     pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
     version: {{ .Chart.AppVersion | quote }}
 spec:
-  group: tekton.dev
+  group: tekton.{{ .Release.Namespace }}
   preserveUnknownFields: false
   versions:
     - name: v1alpha1
@@ -102,5 +102,5 @@ spec:
       conversionReviewVersions: ["v1beta1"]
       clientConfig:
         service:
-          name: tekton-pipelines-webhook
+          name: {{ template "tekton_pipelines.fullname". }}-webhook
           namespace: {{ .Release.Namespace }}

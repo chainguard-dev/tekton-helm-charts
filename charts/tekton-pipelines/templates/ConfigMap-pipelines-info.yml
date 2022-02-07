@@ -15,7 +15,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: pipelines-info
+  name: {{ template "tekton_pipelines.fullname". }}-info
   namespace: {{ .Release.Namespace }}
   labels:
 {{ include "tekton_pipelines.labels" . | indent 4 }}

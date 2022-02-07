@@ -15,7 +15,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: config-leader-election
+  name: {{ template "tekton_pipelines.fullname". }}-leader-election
   namespace: {{ .Release.Namespace }}
   labels:
 {{ include "tekton_pipelines.labels" . | indent 4 }}

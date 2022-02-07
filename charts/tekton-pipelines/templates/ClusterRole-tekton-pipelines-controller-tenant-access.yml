@@ -16,7 +16,7 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   # This is the access that the controller needs on a per-namespace basis.
-  name: tekton-pipelines-controller-tenant-access
+  name: {{ template "tekton_pipelines.fullname". }}-tenant
   labels:
     app.kubernetes.io/component: controller
 {{ include "tekton_pipelines.labels" . | indent 4 }}

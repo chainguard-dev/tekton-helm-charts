@@ -5,7 +5,7 @@ metadata:
   # Note: the Deployment name must be the same as the Service name specified in
   # config/400-webhook-service.yaml. If you change this name, you must also
   # change the value of WEBHOOK_SERVICE_NAME below.
-  name: tekton-pipelines-webhook
+  name: {{ template "tekton_pipelines.fullname". }}-webhook
   namespace: {{ .Release.Namespace }}
   labels:
 {{ include "tekton_pipelines.labels" . | indent 4 }}
@@ -49,7 +49,7 @@ spec:
 {{ include "tekton_pipelines.labels" . | indent 20 }}
                 topologyKey: kubernetes.io/hostname
               weight: 100
-      serviceAccountName: tekton-pipelines-webhook
+      serviceAccountName: {{ template "tekton_pipelines.fullname". }}-webhook
       containers:
         - name: webhook
           image: {{ template "pipelines_webhook.image" .Values.webhook.image }}
@@ -74,7 +74,7 @@ spec:
             - name: WEBHOOK_SERVICE_NAME
               value: tekton-pipelines-webhook
             - name: WEBHOOK_SECRET_NAME
-              value: webhook-certs
+              value: {{ template "tekton_pipelines.fullname". }}-webhook-certs
             - name: METRICS_DOMAIN
               value: tekton.dev/pipeline
           securityContext:

@@ -23,7 +23,7 @@ delete_cluster:
 dev_cluster:
 	 kind create cluster \
         --name ${KIND_CLUSTER_NAME} \
-        --config ./test/kind.yaml --retain && \
+        --config ./tests/kind.yaml --retain && \
 	  echo "Kubernetes cluster:" && \
       kubectl get nodes -o wide
 
@@ -31,7 +31,7 @@ delete_cluster:
 	kind delete cluster --name ${KIND_CLUSTER_NAME}
 
 install: build
-	helm install --create-namespace --namespace ${NAMESPACE} ${CHART_NAME} ${CHART_DIR}
+	helm install --skip-crds --create-namespace --namespace ${NAMESPACE} ${CHART_NAME} ${CHART_DIR}
 
 uninstall: build
 	helm uninstall --namespace ${NAMESPACE} ${CHART_NAME}
@@ -45,14 +45,14 @@ uninstall:
 helm_debug:
 	helm install --create-namespace --namespace ${NAMESPACE} --dry-run --debug ${CHART_NAME} ${CHART_DIR}
 
-helm_install:
-	ct install --charts ./charts/tekton-pipeline --config ct.yaml
+test:
+	kubectl apply -f tests/${CHART_NAME}
 
-helm_lint:
+ct_lint:
 	ct lint --config ct.yaml
 
-helm_test:
-	ct install --chart-dirs ${CHART_DIR}
+ct_install:
+	ct install --config ct.yaml
 
 test_task:
 	kubectl create -f ./tests/${CHART_DIR}

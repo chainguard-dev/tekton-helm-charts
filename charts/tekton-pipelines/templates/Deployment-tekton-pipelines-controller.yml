@@ -86,7 +86,7 @@ spec:
             - name: CONFIG_OBSERVABILITY_NAME
               value: config-observability
             - name: CONFIG_ARTIFACT_BUCKET_NAME
-              value: config-artifact-bucket
+              value: {{ template "tekton_pipelines.fullname". }}-artifact-bucket
             - name: CONFIG_ARTIFACT_PVC_NAME
               value: config-artifact-pvc
             - name: CONFIG_FEATURE_FLAGS_NAME

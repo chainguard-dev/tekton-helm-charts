@@ -15,7 +15,7 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: tekton-pipelines-controller
+  name: {{ template "tekton_pipelines.fullname". }}-controller
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/component: controller
@@ -28,7 +28,7 @@ rules:
   - apiGroups: [""]
     resources: ["configmaps"]
     verbs: ["get"]
-    resourceNames: ["config-logging", "config-observability", "config-artifact-bucket", "config-artifact-pvc", "feature-flags", "config-leader-election", "config-registry-cert"]
+    resourceNames: ["{{ template "tekton_pipelines.fullname". }}-logging", "{{ template "tekton_pipelines.fullname". }}-observability", "{{ template "tekton_pipelines.fullname". }}-artifact-bucket", "{{ template "tekton_pipelines.fullname". }}-artifact-pvc", "{{ template "tekton_pipelines.fullname". }}-feature-flags", "{{ template "tekton_pipelines.fullname". }}-leader-election", "{{ template "tekton_pipelines.fullname". }}-registry-cert"]
   - apiGroups: ["policy"]
     resources: ["podsecuritypolicies"]
     resourceNames: ["tekton-pipelines"]

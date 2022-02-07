@@ -26,5 +26,5 @@ rules:
   # installed namespace.
   - apiGroups: [""]
     resources: ["configmaps"]
-    resourceNames: ["pipelines-info"]
+    resourceNames: ["{{ template "tekton_pipelines.fullname". }}-info"]
     verbs: ["get"]

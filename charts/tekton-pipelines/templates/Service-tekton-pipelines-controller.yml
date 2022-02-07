@@ -22,7 +22,7 @@ metadata:
     pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
     app: tekton-pipelines-controller
     version: {{ .Chart.AppVersion | quote }}
-  name: tekton-pipelines-controller
+  name: {{ template "tekton_pipelines.fullname". }}-controller
   namespace: {{ .Release.Namespace }}
 spec:
   ports:

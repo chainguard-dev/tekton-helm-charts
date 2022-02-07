@@ -15,16 +15,16 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: tekton-pipelines-webhook-leaderelection
+  name: {{ template "tekton_pipelines.fullname". }}-webhook-leaderelection
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/component: webhook
 {{ include "tekton_pipelines.labels" . | indent 4 }}
 subjects:
   - kind: ServiceAccount
-    name: tekton-pipelines-webhook
+    name: {{ template "tekton_pipelines.fullname". }}-webhook
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
-  name: tekton-pipelines-leader-election
+  name: {{ template "tekton_pipelines.fullname". }}-leader-election
   apiGroup: rbac.authorization.k8s.io

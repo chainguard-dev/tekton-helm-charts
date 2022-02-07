@@ -11,7 +11,7 @@ webhooks:
   - admissionReviewVersions: ["v1"]
     clientConfig:
       service:
-        name: tekton-pipelines-webhook
+        name: {{ template "tekton_pipelines.fullname". }}-webhook
         namespace: {{ .Release.Namespace }}
     failurePolicy: Fail
     sideEffects: None
