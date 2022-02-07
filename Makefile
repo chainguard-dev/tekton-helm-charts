@@ -13,13 +13,14 @@ build:
 	rm -rf ${CHART_DIR}/Chart.lock
 	helm lint ${CHART_DIR}
 
+delete_cluster:
+	kind delete cluster --name ${KIND_CLUSTER_NAME}
+
 dev_cluster:
 	 kind create cluster \
-        --verbosity=${KIND_LOG_LEVEL} \
         --name ${KIND_CLUSTER_NAME} \
-        --config ./kind.yaml \
-        --retain && \
-	  echo "Kubernetes cluster:" \
+        --config ./test/kind.yaml --retain && \
+	  echo "Kubernetes cluster:" && \
       kubectl get nodes -o wide
 
 install: build
