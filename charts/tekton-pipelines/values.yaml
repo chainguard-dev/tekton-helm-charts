@@ -35,9 +35,10 @@ pipeline_deployment:
 
 # pipeline webhook
 webhook:
+  replicas: 1
   image:
-    repository: "gcr:io/tekton-releases/github.com/tektoncd/pipeline/cmd/webhook"
-    version: "sha256:3e9beebdc80184231a9e147b20b9e8f15e7445af9b0e05dc6f05ce396c1f8500"
+    repository: "gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/webhook"
+    digest: "sha256:3e9beebdc80184231a9e147b20b9e8f15e7445af9b0e05dc6f05ce396c1f8500"
     tag: "v0.32.1"
   resources:
     requests:

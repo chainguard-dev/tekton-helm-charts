@@ -3,15 +3,14 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   labels:
-    app.kubernetes.io/instance: default
-    app.kubernetes.io/part-of: tekton-dashboard
-  name: tekton-dashboard-info
-  namespace: tekton-pipelines
+{{ include "tekton_dashboard.labels" . | indent 4 }}
+  name: {{ template "tekton_dashboard.fullname". }}-info
+  namespace: {{ .Release.Namespace }}
 rules:
   - apiGroups:
       - ""
     resourceNames:
-      - dashboard-info
+      - {{ template "tekton_dashboard.fullname". }}-info
     resources:
       - configmaps
     verbs:

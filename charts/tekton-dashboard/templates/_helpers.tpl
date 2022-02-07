@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "tekton_pipelines.name" -}}
+{{- define "tekton_dashboard.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "tekton_pipelines.fullname" -}}
+{{- define "tekton_dashboard.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -24,35 +24,21 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 
-{{- define "tekton_pipelines.labels" -}}
-app.kubernetes.io/instance: {{ template "tekton_pipelines.fullname". }}
-app.kubernetes.io/part-of: tekton-pipelines
+{{- define "tekton_dashboard.labels" -}}
+app.kubernetes.io/instance: {{ template "tekton_dashboard.fullname". }}
+app.kubernetes.io/part-of: tekton-dashboard
 helm-release: {{ .Release.Name | quote }}
 helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version}}"
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 
-{{- define "tekton_pipelines.labelselector" -}}
-app.kubernetes.io/instance: {{ template "tekton_pipelines.fullname". }}
-app.kubernetes.io/part-of: tekton-pipelines
+{{- define "tekton_dashboard.labelselector" -}}
+app.kubernetes.io/instance: {{ template "tekton_dashboard.fullname". }}
+app.kubernetes.io/component: dashboard
+app.kubernetes.io/name: dashboard
+app.kubernetes.io/part-of: tekton-dashboard
 {{- end }}
 
-
-{{/*
-Create the image path for the passed in image field
-*/}}
-{{- define "pipeline_deployment.image" -}}
+{{- define "dashboard.image" -}}
 {{- printf "%s:%s@%s" .repository .tag .digest -}}
-{{- end -}}
-
-{{- define "pipelines_webhook.image" -}}
-{{- printf "%s:%s@%s" .repository .tag .digest -}}
-{{- end -}}
-
-{{- define "pipeline_deployment.argsImages" -}}
-{{- $list := list -}}
-{{- range $k, $v := .Values.pipeline_deployment.args -}}
-{{- $list = append $list (printf "\"-%s\",\"%s\"" $v.name $v.image) -}}
-{{- end -}}
-{{ join ", " $list }}
 {{- end -}}

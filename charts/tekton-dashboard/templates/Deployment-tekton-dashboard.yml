@@ -4,40 +4,31 @@ kind: Deployment
 metadata:
   labels:
     app: tekton-dashboard
-    app.kubernetes.io/component: dashboard
-    app.kubernetes.io/instance: default
-    app.kubernetes.io/name: dashboard
-    app.kubernetes.io/part-of: tekton-dashboard
-    app.kubernetes.io/version: v0.24.1
-    dashboard.tekton.dev/release: v0.24.1
-    version: v0.24.1
-  name: tekton-dashboard
-  namespace: tekton-pipelines
+{{ include "tekton_dashboard.labels" . | indent 4 }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion}}
+    dashboard.tekton.dev/release: {{ .Chart.AppVersion}}
+    version: {{ .Chart.AppVersion}}
+  name: {{ template "tekton_dashboard.fullname". }}
+  namespace: {{ .Release.Namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.dashboard_deployment.replicas  }}
   selector:
     matchLabels:
-      app.kubernetes.io/component: dashboard
-      app.kubernetes.io/instance: default
-      app.kubernetes.io/name: dashboard
-      app.kubernetes.io/part-of: tekton-dashboard
+{{ include "tekton_dashboard.labelselector" . | indent 6 }}
   template:
     metadata:
       labels:
         app: tekton-dashboard
-        app.kubernetes.io/component: dashboard
-        app.kubernetes.io/instance: default
-        app.kubernetes.io/name: dashboard
-        app.kubernetes.io/part-of: tekton-dashboard
-        app.kubernetes.io/version: v0.24.1
+{{ include "tekton_dashboard.labelselector" . | indent 8 }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion}}
       name: tekton-dashboard
     spec:
       containers:
         - args:
-            - --port=9097
+            - --port={{ .Values.dashboard_deployment.container.port }}
             - --logout-url=
-            - --pipelines-namespace=tekton-pipelines
-            - --triggers-namespace=tekton-pipelines
+            - --pipelines-namespace={{.Release.Namespace }}
+            - --triggers-namespace={{.Release.Namespace }}
             - --read-only=false
             - --log-level=info
             - --log-format=json
@@ -49,22 +40,22 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-          image: gcr.io/tekton-releases/github.com/tektoncd/dashboard/cmd/dashboard:v0.24.1@sha256:fe4febbb74ca3e7027c29719e32e38074b3af6be588ee08cca5826f21fa003a1
+          image: {{ template "dashboard.image" .Values.dashboard_deployment.container.image }}
           livenessProbe:
             httpGet:
               path: /health
-              port: 9097
+              port: {{ .Values.dashboard_deployment.container.port }}
           name: tekton-dashboard
           ports:
-            - containerPort: 9097
+            - containerPort: {{ .Values.dashboard_deployment.container.port }}
           readinessProbe:
             httpGet:
               path: /readiness
-              port: 9097
+              port: {{ .Values.dashboard_deployment.container.port }}
       nodeSelector:
         kubernetes.io/os: linux
       securityContext:
         runAsNonRoot: true
         runAsUser: 65532
-      serviceAccountName: tekton-dashboard
+      serviceAccountName: {{ template "tekton_dashboard.fullname". }}
       volumes: []

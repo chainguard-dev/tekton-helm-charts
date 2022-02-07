@@ -15,7 +15,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tekton-pipelines-controller
+  name: {{ template "tekton_pipelines.fullname". }}-controller
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: controller
@@ -49,7 +49,7 @@ spec:
                     operator: NotIn
                     values:
                       - windows
-      serviceAccountName: tekton-pipelines-controller
+      serviceAccountName: {{ template "tekton_pipelines.fullname". }}-controller
       containers:
         - name: tekton-pipelines-controller
           image: {{ template "pipeline_deployment.image" .Values.pipeline_deployment.image   }}
@@ -80,19 +80,19 @@ spec:
             # the controller's Role in 200-role.yaml to include the new
             # values in the "configmaps" "get" rule.
             - name: CONFIG_DEFAULTS_NAME
-              value: config-defaults
+              value: {{ template "tekton_pipelines.fullname". }}-defaults
             - name: CONFIG_LOGGING_NAME
-              value: config-logging
+              value: {{ template "tekton_pipelines.fullname". }}-logging
             - name: CONFIG_OBSERVABILITY_NAME
-              value: config-observability
+              value: {{ template "tekton_pipelines.fullname". }}-observability
             - name: CONFIG_ARTIFACT_BUCKET_NAME
               value: {{ template "tekton_pipelines.fullname". }}-artifact-bucket
             - name: CONFIG_ARTIFACT_PVC_NAME
-              value: config-artifact-pvc
+              value: {{ template "tekton_pipelines.fullname". }}-artifact-pvc
             - name: CONFIG_FEATURE_FLAGS_NAME
-              value: feature-flags
+              value: {{ template "tekton_pipelines.fullname". }}-feature-flags
             - name: CONFIG_LEADERELECTION_NAME
-              value: config-leader-election
+              value: {{ template "tekton_pipelines.fullname". }}-leader-election
             - name: SSL_CERT_FILE
               value: /etc/config-registry-cert/cert
             - name: SSL_CERT_DIR
@@ -133,7 +133,7 @@ spec:
       volumes:
         - name: config-logging
           configMap:
-            name: config-logging
+            name: {{ template "tekton_pipelines.fullname". }}-logging
         - name: config-registry-cert
           configMap:
-            name: config-registry-cert
+            name: {{ template "tekton_pipelines.fullname". }}-registry-cert

@@ -4,23 +4,17 @@ kind: Service
 metadata:
   labels:
     app: tekton-dashboard
-    app.kubernetes.io/component: dashboard
-    app.kubernetes.io/instance: default
-    app.kubernetes.io/name: dashboard
-    app.kubernetes.io/part-of: tekton-dashboard
-    app.kubernetes.io/version: v0.24.1
-    dashboard.tekton.dev/release: v0.24.1
-    version: v0.24.1
+{{ include "tekton_dashboard.labels" . | indent 4 }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    dashboard.tekton.dev/release: {{ .Chart.AppVersion }}
+    version: {{ .Chart.AppVersion }}
   name: tekton-dashboard
-  namespace: tekton-pipelines
+  namespace: {{ .Release.Namespace }}
 spec:
   ports:
     - name: http
-      port: 9097
+      port: {{ .Values.dashboard_deployment.container.port }}
       protocol: TCP
-      targetPort: 9097
+      targetPort: {{ .Values.dashboard_deployment.container.port }}
   selector:
-    app.kubernetes.io/component: dashboard
-    app.kubernetes.io/instance: default
-    app.kubernetes.io/name: dashboard
-    app.kubernetes.io/part-of: tekton-dashboard
+{{ include "tekton_dashboard.labelselector" . | indent 4 }}

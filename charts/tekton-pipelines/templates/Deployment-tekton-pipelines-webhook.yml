@@ -14,7 +14,7 @@ metadata:
     pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
     version: {{ .Chart.AppVersion | quote }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.webhook.replicas }}
   selector:
     matchLabels:
       app.kubernetes.io/name: webhook
@@ -63,16 +63,22 @@ spec:
             # If you are changing these names, you will also need to update
             # the webhook's Role in 200-role.yaml to include the new
             # values in the "configmaps" "get" rule.
+            - name: CONFIG_ARTIFACT_BUCKET_NAME
+              value: {{ template "tekton_pipelines.fullname". }}-artifact-bucket
+            - name: CONFIG_ARTIFACT_PVC_NAME
+              value: {{ template "tekton_pipelines.fullname". }}-artifact-pvc
+            - name: CONFIG_DEFAULTS_NAME
+              value: {{ template "tekton_pipelines.fullname". }}-defaults
             - name: CONFIG_LOGGING_NAME
-              value: config-logging
+              value: {{ template "tekton_pipelines.fullname". }}-logging
             - name: CONFIG_OBSERVABILITY_NAME
-              value: config-observability
+              value: {{ template "tekton_pipelines.fullname". }}-observability
             - name: CONFIG_LEADERELECTION_NAME
-              value: config-leader-election
+              value: {{ template "tekton_pipelines.fullname". }}-leader-election
             - name: CONFIG_FEATURE_FLAGS_NAME
-              value: feature-flags
+              value: {{ template "tekton_pipelines.fullname". }}-feature-flags
             - name: WEBHOOK_SERVICE_NAME
-              value: tekton-pipelines-webhook
+              value: {{ template "tekton_pipelines.fullname". }}-webhook
             - name: WEBHOOK_SECRET_NAME
               value: {{ template "tekton_pipelines.fullname". }}-webhook-certs
             - name: METRICS_DOMAIN
