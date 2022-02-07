@@ -4,7 +4,7 @@ kind: ClusterRole
 metadata:
   labels:
 {{ include "tekton_dashboard.labels" . | indent 4 }}
-  name: {{ template "tekton_dashboard.fullname". }}--tenant
+  name: {{ template "tekton_dashboard.fullname". }}-tenant
 rules:
   - apiGroups:
       - dashboard.tekton.dev

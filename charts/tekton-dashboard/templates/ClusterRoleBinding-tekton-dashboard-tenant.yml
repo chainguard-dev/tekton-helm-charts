@@ -11,5 +11,5 @@ roleRef:
   name: {{ template "tekton_dashboard.fullname". }}-tenant
 subjects:
   - kind: ServiceAccount
-    name: {{ template "tekton_dashboard.fullname". }}dashboard
+    name: {{ template "tekton_dashboard.fullname". }}-dashboard
     namespace: {{ .Release.Namespace }}

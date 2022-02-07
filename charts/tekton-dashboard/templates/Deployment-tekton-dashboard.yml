@@ -57,5 +57,5 @@ spec:
       securityContext:
         runAsNonRoot: true
         runAsUser: 65532
-      serviceAccountName: {{ template "tekton_dashboard.fullname". }}
+      serviceAccountName: {{ template "tekton_dashboard.fullname". }}-dashboard
       volumes: []

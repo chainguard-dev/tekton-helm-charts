@@ -15,7 +15,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: tekton-pipelines-info
+  name: {{ template "tekton_pipelines.fullname". }}-info
   namespace: {{ .Release.Namespace }}
   labels:
 {{ include "tekton_pipelines.labels" . | indent 4 }}

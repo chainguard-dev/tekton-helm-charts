@@ -22,9 +22,9 @@ metadata:
 {{ include "tekton_pipelines.labels" . | indent 4 }}
 subjects:
   - kind: ServiceAccount
-    name: tekton-pipelines-controller
+    name: {{ template "tekton_pipelines.fullname". }}-controller
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
-  name: tekton-pipelines-controller
+  name: {{ template "tekton_pipelines.fullname". }}-controller
   apiGroup: rbac.authorization.k8s.io

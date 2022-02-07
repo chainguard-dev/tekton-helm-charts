@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/version: {{ .Chart.AppVersion }}
     dashboard.tekton.dev/release: {{ .Chart.AppVersion }}
     version: {{ .Chart.AppVersion }}
-  name: tekton-dashboard
+  name: {{ template "tekton_dashboard.fullname". }}
   namespace: {{ .Release.Namespace }}
 spec:
   ports:

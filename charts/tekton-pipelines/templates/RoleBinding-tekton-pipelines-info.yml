@@ -28,4 +28,4 @@ subjects:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: tekton-pipelines-info
+  name: {{ template "tekton_pipelines.fullname". }}-info

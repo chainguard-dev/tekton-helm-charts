@@ -21,7 +21,7 @@ metadata:
 {{ include "tekton_pipelines.labels" . | indent 4 }}
 subjects:
   - kind: ServiceAccount
-    name: {{ template "tekton_pipelines.fullname". }}-webhook-webhook
+    name: {{ template "tekton_pipelines.fullname". }}-webhook
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole

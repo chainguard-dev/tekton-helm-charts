@@ -3,9 +3,9 @@ kind: CustomResourceDefinition
 metadata:
   labels:
 {{ include "tekton_dashboard.labels" . | indent 4 }}
-  name: extensions.dashboard.tekton.{{ .Release.Namespace }}
+  name: extensions.dashboard.tekton.dev
 spec:
-  group: dashboard.tekton.{{ .Release.Namespace }}
+  group: dashboard.tekton.dev
   names:
     categories:
       - tekton

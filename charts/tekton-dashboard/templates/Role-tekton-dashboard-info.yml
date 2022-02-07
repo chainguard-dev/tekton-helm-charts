@@ -10,7 +10,7 @@ rules:
   - apiGroups:
       - ""
     resourceNames:
-      - {{ template "tekton_dashboard.fullname". }}-info
+      - ""
     resources:
       - configmaps
     verbs:
