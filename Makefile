@@ -15,15 +15,16 @@ build:
 	helm lint ${CHART_DIR}
 
 open_dashboard:
-	$(shell kubectl port-forward svc/tekton-dashboard 9097:9097 -n tekton-pipelines &)
+	$(shell echo "kubectl port-forward svc/tekton-dashboard 9097:9097 -n tekton-pipelines &")
+
+delete_cluster:
+	kind delete cluster --name ${KIND_CLUSTER_NAME}
 
 dev_cluster:
 	 kind create cluster \
-        --verbosity=${KIND_LOG_LEVEL} \
         --name ${KIND_CLUSTER_NAME} \
-        --config ./kind.yaml \
-        --retain && \
-	  echo "Kubernetes cluster:" \
+        --config ./test/kind.yaml --retain && \
+	  echo "Kubernetes cluster:" && \
       kubectl get nodes -o wide
 
 delete_cluster:
@@ -31,6 +32,9 @@ delete_cluster:
 
 install: build
 	helm install ${CHART_NAME} ${CHART_DIR}
+
+uninstall: build
+	helm uninstall ${CHART_NAME}
 
 upgrade: build
 	helm upgrade -i ${CHART_NAME} ${CHART_DIR}
