@@ -1,4 +1,4 @@
-CHART_NAME ?= tekton-pipeline
+CHART_NAME ?= tekton-pipelines
 CHART_DIR = charts/${CHART_NAME}
 
 # Versions of tekton components
@@ -31,22 +31,28 @@ delete_cluster:
 	kind delete cluster --name ${KIND_CLUSTER_NAME}
 
 install: build
-	helm install ${CHART_NAME} ${CHART_DIR}
+	helm install --create-namespace --namespace ${NAMESPACE} ${CHART_NAME} ${CHART_DIR}
 
 uninstall: build
-	helm uninstall ${CHART_NAME}
+	helm uninstall --namespace ${NAMESPACE} ${CHART_NAME}
 
 upgrade: build
-	helm upgrade -i ${CHART_NAME} ${CHART_DIR}
+	helm upgrade --create-namespace --install --namespace ${NAMESPACE} ${CHART_NAME} ${CHART_DIR}
 
 uninstall:
 	helm uninstall ${CHART_NAME}
+
+helm_debug:
+	helm install --create-namespace --namespace ${NAMESPACE} --dry-run --debug ${CHART_NAME} ${CHART_DIR}
 
 helm_install:
 	ct install --charts ./charts/tekton-pipeline --config ct.yaml
 
 helm_lint:
 	ct lint --config ct.yaml
+
+helm_test:
+	ct install --chart-dirs ${CHART_DIR}
 
 test_task:
 	kubectl create -f ./tests/${CHART_DIR}
