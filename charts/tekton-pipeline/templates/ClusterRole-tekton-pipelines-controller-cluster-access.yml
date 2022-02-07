@@ -18,7 +18,7 @@ metadata:
   name: tekton-pipelines-controller-cluster-access
   labels:
     app.kubernetes.io/component: controller
-{{ include "tekton.labels" . | indent 4 }}
+{{ include "tekton_pipelines.labels" . | indent 4 }}
 rules:
   - apiGroups: [""]
     # Controller needs to watch Pods created by TaskRuns to see them progress.

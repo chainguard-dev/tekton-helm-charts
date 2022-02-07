@@ -1,4 +1,4 @@
-{{- define "tekton.labels" -}}
+{{- define "tekton_pipelines.labels" -}}
 app.kubernetes.io/instance: default
 app.kubernetes.io/part-of: tekton-pipelines
 helm-release: {{ .Release.Name | quote }}
@@ -6,7 +6,7 @@ helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version}}"
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 
-{{- define "tekton.labelselector" -}}
+{{- define "tekton_pipelines.labelselector" -}}
 app.kubernetes.io/instance: default
 app.kubernetes.io/part-of: tekton-pipelines
 {{- end }}
