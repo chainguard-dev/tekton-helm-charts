@@ -15,7 +15,7 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: {{ template "tekton_pipelines.fullname". }}-webhook
+  name: webhook.pipeline.tekton.dev
   labels:
     app.kubernetes.io/component: webhook
 {{ include "tekton_pipelines.labels" . | indent 4 }}
