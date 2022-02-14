@@ -44,8 +44,14 @@ jobs:
       - name: Run chart-testing (lint)
         run: ct lint --config ct.yaml
 
-      - name: Create KIND Cluster
-        uses: helm/kind-action@94729529f85113b88f4f819c17ce61382e6d8478 # pin@v1.2.0
+      - name: Create kind cluster
+        uses: helm/kind-action@v1.2.0
 
-      - name: Run chart-testing (install)
-        run: ct install --config ct.yaml
+      - name: Install Tekton Pipelines
+        run: "make upgrade CHART_NAME=tekton-pipelines NAMESPACE=tekton-pipelines"
+
+      - name: Install Tekton Chains
+        run: "make upgrade CHART_NAME=tekton-chains NAMESPACE=tekton-chains"
+
+      - name: Install Tekton Dashboard
+        run: "make upgrade CHART_NAME=tekton-dashboard NAMESPACE=tekton-pipelines"
