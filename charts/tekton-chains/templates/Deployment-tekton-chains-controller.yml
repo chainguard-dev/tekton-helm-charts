@@ -7,7 +7,9 @@ metadata:
     app.kubernetes.io/name: tekton-pipelines
     app.kubernetes.io/component: chains
     pipeline.tekton.dev/release: "devel"
-    version: "v0.7.0"
+    version: {{ .Chart.AppVersion | quote }}
+    helm-release: {{ .Release.Name | quote }}
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version}}"
 spec:
   replicas: 1
   selector:
@@ -18,15 +20,17 @@ spec:
       annotations:
         cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
       labels:
+        helm-release: {{ .Release.Name | quote }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version}}"
         app: tekton-chains-controller
         app.kubernetes.io/name: tekton-pipelines
         app.kubernetes.io/component: controller
-        version: "v0.7.0"
+        version: {{ .Chart.AppVersion | quote }}
     spec:
-      serviceAccountName: tekton-chains-controller
+      serviceAccountName: {{ template "tekton_chains.fullname" . }}-controller
       containers:
         - name: tekton-chains-controller
-          image: gcr.io/tekton-releases/github.com/tektoncd/chains/cmd/controller:v0.7.0@sha256:7a4407056f73435bd869d0292ebdb788a99f22f26f4eb0dab59c6bcf7fd16fb6
+          image: {{ template "tekton_chains.image" .Values.chains_deployment.image }}
           volumeMounts:
             - name: signing-secrets
               mountPath: /etc/signing-secrets
