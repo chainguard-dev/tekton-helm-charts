@@ -49,7 +49,7 @@ ct_lint:
 	ct lint --config ct.yaml
 
 ct_install:
-	ct install --config ct.yaml
+	ct install --config ct.yaml --debug
 
 ct_install_chart:
 	ct install --chart-dirs charts/ --charts ${CHART_DIR}
