@@ -25,9 +25,8 @@ If release name contains chart name it will be used as a full name.
 
 
 {{- define "tekton_chains.labels" -}}
-app.kubernetes.io/component: chains
 app.kubernetes.io/instance: {{ template "tekton_chains.fullname". }}
-app.kubernetes.io/part-of: tekton-chains
+app.kubernetes.io/part-of: tekton-dashboard
 helm-release: {{ .Release.Name | quote }}
 helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version}}"
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
@@ -35,11 +34,11 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 
 {{- define "tekton_chains.labelselector" -}}
 app.kubernetes.io/instance: {{ template "tekton_chains.fullname". }}
-app.kubernetes.io/component: chains
-app.kubernetes.io/name: chains
-app.kubernetes.io/part-of: chains
+app.kubernetes.io/component: dashboard
+app.kubernetes.io/name: dashboard
+app.kubernetes.io/part-of: tekton-dashboard
 {{- end }}
 
-{{- define "chains.image" -}}
+{{- define "tekton_chains.image" -}}
 {{- printf "%s:%s@%s" .repository .tag .digest -}}
 {{- end -}}

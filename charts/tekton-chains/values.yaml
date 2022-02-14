@@ -1,6 +1,5 @@
 icon: https://github.com/tektoncd/chains/blob/main/tekton_chains-color.png
 
-
 chains_deployment:
   replicas: 1
   container:

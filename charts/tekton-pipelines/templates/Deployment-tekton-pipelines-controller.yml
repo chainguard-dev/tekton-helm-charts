@@ -15,7 +15,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "tekton_pipelines.fullname". }}-controller
+  name: {{ template "tekton_pipelines.fullname" . }}-controller
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: controller
@@ -37,7 +37,7 @@ spec:
         app.kubernetes.io/name: controller
         app.kubernetes.io/component: controller
         pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
-        app: tekton-pipelines-controller
+        app: {{ template "tekton_pipelines.fullname" . }}-controller
         version: {{ .Chart.AppVersion | quote }}
     spec:
       affinity:

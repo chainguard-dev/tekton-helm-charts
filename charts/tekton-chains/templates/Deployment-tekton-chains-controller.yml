@@ -1,32 +1,32 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "tekton_chains.fullname". }}-controller
-  namespace: {{ .Release.Namespace }}
+  name: tekton-chains-controller
+  namespace: tekton-chains
   labels:
-{{ include "tekton_chains.labels" . | indent 4 }}
+    app.kubernetes.io/name: tekton-pipelines
+    app.kubernetes.io/component: chains
     pipeline.tekton.dev/release: "devel"
     version: "v0.7.0"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ template "tekton_chains.fullname". }}-controller
+      app: tekton-chains-controller
   template:
     metadata:
       annotations:
         cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
       labels:
-{{ include "tekton_chains.labels" . | indent 8 }}
-        app: {{ template "tekton_chains.fullname". }}-controller
-        # # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-        # pipeline.tekton.dev/release: "devel"
+        app: tekton-chains-controller
+        app.kubernetes.io/name: tekton-pipelines
+        app.kubernetes.io/component: controller
         version: "v0.7.0"
     spec:
+      serviceAccountName: tekton-chains-controller
       containers:
         - name: tekton-chains-controller
-          image: {{ template "chains.image" .Values.chains_deployment.container.image }}
+          image: gcr.io/tekton-releases/github.com/tektoncd/chains/cmd/controller:v0.7.0@sha256:7a4407056f73435bd869d0292ebdb788a99f22f26f4eb0dab59c6bcf7fd16fb6
           volumeMounts:
             - name: signing-secrets
               mountPath: /etc/signing-secrets
@@ -39,7 +39,6 @@ spec:
                   fieldPath: metadata.namespace
             - name: METRICS_DOMAIN
               value: tekton.dev/chains
-      serviceAccountName: {{ template "tekton_chains.fullname". }}-controller
       volumes:
         - name: signing-secrets
           secret:
@@ -57,16 +56,4 @@ spec:
                   expirationSeconds: 600 # Use as short-lived as possible.
                   audience: sigstore
 
-# Copyright 2021 The Tekton Authors
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+
