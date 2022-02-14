@@ -33,14 +33,11 @@ delete_cluster:
 install: build
 	helm install --skip-crds --create-namespace --namespace ${NAMESPACE} ${CHART_NAME} ${CHART_DIR}
 
-uninstall: build
+uninstall:
 	helm uninstall --namespace ${NAMESPACE} ${CHART_NAME}
 
 upgrade: build
 	helm upgrade --create-namespace --install --namespace ${NAMESPACE} ${CHART_NAME} ${CHART_DIR}
-
-uninstall:
-	helm uninstall ${CHART_NAME}
 
 helm_debug:
 	helm install --create-namespace --namespace ${NAMESPACE} --dry-run --debug ${CHART_NAME} ${CHART_DIR}
@@ -54,11 +51,14 @@ ct_lint:
 ct_install:
 	ct install --config ct.yaml
 
+ct_install_chart:
+	ct install --chart-dirs charts/ --charts ${CHART_DIR}
+
 test_task:
-	kubectl create -f ./tests/${CHART_DIR}
+	kubectl create -f ./tests/${CHART_NAME}
 	tkn task ls
 	tkn task describe echo-hello-world
-	kubectl delete -f ./tests/${CHART_DIR}
+	kubectl delete -f ./tests/${CHART_NAME}
 
 fetch_pipelines:
 	rm -rf ./charts/tekton-pipeline/templates/

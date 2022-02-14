@@ -32,7 +32,7 @@ spec:
             - --read-only=false
             - --log-level=info
             - --log-format=json
-            - --namespace=
+            - --namespace={{.Release.Namespace }}
             - --stream-logs=true
             - --external-logs=
           env:

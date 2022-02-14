@@ -31,7 +31,7 @@ rules:
     verbs: ["create", "update", "patch"]
   # Read-only access to these.
   - apiGroups: [""]
-    resources: ["configmaps", "limitranges", "secrets", "serviceaccounts"]
+    resources: ["configmaps", "limitranges", "secrets", "serviceaccounts","namespaces"]
     verbs: ["get", "list", "watch"]
   # Read-write access to StatefulSets for Affinity Assistant.
   - apiGroups: ["apps"]

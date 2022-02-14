@@ -66,10 +66,7 @@ rules:
     verbs: ["use"]
   - apiGroups: [""]
     resources: ["namespaces"]
-    verbs: ["get"]
-    # The webhook configured the namespace as the OwnerRef on various cluster-scoped resources,
-    # which requires we can Get the system namespace.
-    resourceNames: ["tekton-pipelines"]
+    verbs: ["get","list","watch"]
   - apiGroups: [""]
     resources: ["namespaces/finalizers"]
     verbs: ["update"]
