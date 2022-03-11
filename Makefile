@@ -44,12 +44,6 @@ helm_install:
 helm_lint:
 	ct lint --config ct.yaml
 
-test_task:
-	kubectl create -f ./tests/${CHART_DIR}
-	tkn task ls
-	tkn task describe echo-hello-world
-	kubectl delete -f ./tests/${CHART_DIR}
-
 fetch_pipelines:
 	rm -rf ./charts/tekton-pipeline/templates/
 	mkdir -p ./charts/tekton-pipeline/templates
