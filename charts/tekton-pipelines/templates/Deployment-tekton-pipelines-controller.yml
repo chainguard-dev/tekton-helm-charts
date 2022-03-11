@@ -1,0 +1,139 @@
+# Copyright 2019 The Tekton Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "tekton_pipelines.fullname" . }}-controller
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: controller
+    app.kubernetes.io/component: controller
+{{ include "tekton_pipelines.labels" . | indent 4 }}
+    pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
+    version: {{ .Chart.AppVersion | quote }}
+spec:
+  replicas: {{ .Values.pipeline_deployment.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: controller
+      app.kubernetes.io/component: controller
+{{ include "tekton_pipelines.labelselector" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+{{ include "tekton_pipelines.labels" . | indent 8 }}
+        app.kubernetes.io/name: controller
+        app.kubernetes.io/component: controller
+        pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
+        app: {{ template "tekton_pipelines.fullname" . }}-controller
+        version: {{ .Chart.AppVersion | quote }}
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/os
+                    operator: NotIn
+                    values:
+                      - windows
+      serviceAccountName: {{ template "tekton_pipelines.fullname". }}-controller
+      containers:
+        - name: tekton-pipelines-controller
+          image: {{ template "pipeline_deployment.image" .Values.pipeline_deployment.image   }}
+          args: [
+            {{ template "pipeline_deployment.argsImages" . }}
+          ]
+          volumeMounts:
+            - name: config-logging
+              mountPath: /etc/config-logging
+            - name: config-registry-cert
+              mountPath: /etc/config-registry-cert
+          env:
+            - name: SYSTEM_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            # These phony AWS credentials are here to work around a bug in the aws go sdk
+            # that causes extremely long delays in the execution of tasks after the initial
+            # deployment of the Tekton Pipelines controller. See issue https://github.com/tektoncd/pipeline/issues/4087
+            # for more information.
+            - name: AWS_ACCESS_KEY_ID
+              value: foobarbaz
+            - name: AWS_SECRET_ACCESS_KEY
+              value: foobarbaz
+            - name: AWS_DEFAULT_REGION
+              value: foobarbaz
+            # If you are changing these names, you will also need to update
+            # the controller's Role in 200-role.yaml to include the new
+            # values in the "configmaps" "get" rule.
+            - name: CONFIG_DEFAULTS_NAME
+              value: {{ template "tekton_pipelines.fullname". }}-defaults
+            - name: CONFIG_LOGGING_NAME
+              value: {{ template "tekton_pipelines.fullname". }}-logging
+            - name: CONFIG_OBSERVABILITY_NAME
+              value: {{ template "tekton_pipelines.fullname". }}-observability
+            - name: CONFIG_ARTIFACT_BUCKET_NAME
+              value: {{ template "tekton_pipelines.fullname". }}-artifact-bucket
+            - name: CONFIG_ARTIFACT_PVC_NAME
+              value: {{ template "tekton_pipelines.fullname". }}-artifact-pvc
+            - name: CONFIG_FEATURE_FLAGS_NAME
+              value: {{ template "tekton_pipelines.fullname". }}-feature-flags
+            - name: CONFIG_LEADERELECTION_NAME
+              value: {{ template "tekton_pipelines.fullname". }}-leader-election
+            - name: SSL_CERT_FILE
+              value: /etc/config-registry-cert/cert
+            - name: SSL_CERT_DIR
+              value: /etc/ssl/certs
+            - name: METRICS_DOMAIN
+              value: tekton.dev/pipeline
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+            # User 65532 is the distroless nonroot user ID
+            runAsUser: 65532
+            runAsGroup: 65532
+          ports:
+            - name: metrics
+              containerPort: 9090
+            - name: profiling
+              containerPort: 8008
+            - name: probes
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: probes
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: probes
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+      volumes:
+        - name: config-logging
+          configMap:
+            name: {{ template "tekton_pipelines.fullname". }}-logging
+        - name: config-registry-cert
+          configMap:
+            name: {{ template "tekton_pipelines.fullname". }}-registry-cert
