@@ -10,7 +10,7 @@ rules:
   - apiGroups:
       - ""
     resourceNames:
-      - ""
+      - dashboard-info
     resources:
       - configmaps
     verbs:
