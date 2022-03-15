@@ -73,3 +73,4 @@ rules:
     # The webhook configured the namespace as the OwnerRef on various cluster-scoped resources,
     # which requires we can update the system namespace finalizers.
     resourceNames: ["{{ template "tekton_pipelines.fullname". }}-webhook"]
+

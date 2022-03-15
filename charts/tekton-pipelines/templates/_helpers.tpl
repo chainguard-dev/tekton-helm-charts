@@ -56,3 +56,4 @@ Create the image path for the passed in image field
 {{- end -}}
 {{ join ", " $list }}
 {{- end -}}
+

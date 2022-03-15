@@ -23,6 +23,3 @@ data:
   {{- range $key, $val := .Values.config_defaults }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
-
-
-

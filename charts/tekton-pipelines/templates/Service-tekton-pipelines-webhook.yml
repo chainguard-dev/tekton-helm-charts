@@ -18,3 +18,4 @@ spec:
     app.kubernetes.io/name: webhook
     app.kubernetes.io/component: webhook
 {{ include "tekton_pipelines.labels" . | indent 4 }}
+

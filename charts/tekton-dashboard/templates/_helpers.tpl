@@ -42,3 +42,4 @@ app.kubernetes.io/part-of: tekton-dashboard
 {{- define "dashboard.image" -}}
 {{- printf "%s:%s@%s" .repository .tag .digest -}}
 {{- end -}}
+

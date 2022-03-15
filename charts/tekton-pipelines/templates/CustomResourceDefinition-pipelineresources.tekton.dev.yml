@@ -48,3 +48,4 @@ spec:
       - tekton
       - tekton-pipelines
   scope: Namespaced
+

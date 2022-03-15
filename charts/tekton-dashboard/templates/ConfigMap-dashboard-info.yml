@@ -8,3 +8,4 @@ metadata:
 {{ include "tekton_dashboard.labels" . | indent 4 }}
   name: {{ template "tekton_dashboard.fullname". }}-info
   namespace: {{ .Release.Namespace }}
+

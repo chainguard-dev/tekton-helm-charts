@@ -27,6 +27,3 @@ roleRef:
   kind: Role
   name: {{ template "tekton_chains.fullname". }}-leader-election
   apiGroup: rbac.authorization.k8s.io
-
-
-

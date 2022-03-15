@@ -11,3 +11,4 @@ spec:
       command: [ "curl" ]
       args: [ "-I", "tekton-dashboard.tekton-pipelines:9097", "-s", "-o", "/dev/null"]
   dnsPolicy: ClusterFirst
+

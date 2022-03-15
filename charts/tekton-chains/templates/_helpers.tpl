@@ -34,3 +34,4 @@ app.kubernetes.io/part-of: tekton-pipelines
 pipeline.tekton.dev/release: "devel"
 version: {{ .Chart.AppVersion | quote}}
 {{- end -}}
+
