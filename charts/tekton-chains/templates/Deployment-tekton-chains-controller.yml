@@ -59,5 +59,3 @@ spec:
                   path: oidc-token
                   expirationSeconds: 600 # Use as short-lived as possible.
                   audience: sigstore
-
-
