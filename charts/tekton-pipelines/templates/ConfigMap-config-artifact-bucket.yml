@@ -20,7 +20,7 @@ metadata:
   labels:
 {{ include "tekton_pipelines.labels" . | indent 4 }}
 data:
-  {{- range $key, $val := .Values.config_artifact_bucket }}
+  {{- range $key, $val := .Values.configArtifactBucket }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
 

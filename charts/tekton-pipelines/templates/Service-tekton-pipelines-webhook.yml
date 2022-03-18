@@ -13,7 +13,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   ports:
-{{ .Values.webhook_service.ports | toYaml | indent 4 }}
+{{ .Values.webhookService.ports | toYaml | indent 4 }}
   selector:
     app.kubernetes.io/name: webhook
     app.kubernetes.io/component: webhook

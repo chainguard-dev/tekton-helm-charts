@@ -2,14 +2,14 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ template "tekton_chains.fullname". }}-cluster
+  name: {{ template "tektonChains.fullname". }}-cluster
   labels:
-{{ include "tekton_chains.labels" . | indent 4 }}
+{{ include "tektonChains.labels" . | indent 4 }}
 subjects:
   - kind: ServiceAccount
-    name: {{ template "tekton_chains.fullname". }}-controller
+    name: {{ template "tektonChains.fullname". }}-controller
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: {{ template "tekton_chains.fullname". }}-cluster
+  name: {{ template "tektonChains.fullname". }}-cluster
   apiGroup: rbac.authorization.k8s.io

@@ -51,7 +51,7 @@ Create the image path for the passed in image field
 
 {{- define "pipeline_deployment.argsImages" -}}
 {{- $list := list -}}
-{{- range $k, $v := .Values.pipeline_deployment.args -}}
+{{- range $k, $v := .Values.pipelineDeployment.args -}}
 {{- $list = append $list (printf "\"-%s\",\"%s\"" $v.name $v.image) -}}
 {{- end -}}
 {{ join ", " $list }}

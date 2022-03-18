@@ -2,7 +2,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   labels:
-{{ include "tekton_dashboard.labels" . | indent 4 }}
+{{ include "tektonDashboard.labels" . | indent 4 }}
   name: extensions.dashboard.tekton.dev
 spec:
   group: dashboard.tekton.dev

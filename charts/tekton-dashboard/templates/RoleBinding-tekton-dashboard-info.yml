@@ -3,13 +3,13 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   labels:
-{{ include "tekton_dashboard.labels" . | indent 4 }}
-  name: {{ template "tekton_dashboard.fullname". }}-info
+{{ include "tektonDashboard.labels" . | indent 4 }}
+  name: {{ template "tektonDashboard.fullname". }}-info
   namespace: {{ .Release.Namespace}}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ template "tekton_dashboard.fullname". }}-info
+  name: {{ template "tektonDashboard.fullname". }}-info
 subjects:
   - apiGroup: rbac.authorization.k8s.io
     kind: Group

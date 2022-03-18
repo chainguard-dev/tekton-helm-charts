@@ -1,13 +1,13 @@
 icon: https://github.com/tektoncd/chains/blob/main/tekton_chains-color.png
 
-chains_deployment:
+chainsDeployment:
   replicas: 1
   image:
     repository: "gcr.io/tekton-releases/github.com/tektoncd/chains/cmd/controller"
     tag: "v0.8.0"
     digest: "sha256:599b81739a1171874ee506c314686ff854c64b909df80d9ed558ccce115cee95"
 
-tenant_logging:
+tenantLogging:
   # Common configuration for all knative codebase
   zap-logger-config: |
     {
@@ -38,7 +38,7 @@ tenant_logging:
   loglevel.controller: "info"
   loglevel.webhook: "info"
 
-tenantconfig:
+tenantConfig:
   artifacts.taskrun.format: tekton
   artifacts.taskrun.storage: tekton
   artifacts.taskrun.signer: x509

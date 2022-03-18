@@ -4,17 +4,17 @@ kind: Service
 metadata:
   labels:
     app: tekton-dashboard
-{{ include "tekton_dashboard.labels" . | indent 4 }}
+{{ include "tektonDashboard.labels" . | indent 4 }}
     app.kubernetes.io/version: {{ .Chart.AppVersion }}
     dashboard.tekton.dev/release: {{ .Chart.AppVersion }}
     version: {{ .Chart.AppVersion }}
-  name: {{ template "tekton_dashboard.fullname". }}
+  name: {{ template "tektonDashboard.fullname". }}
   namespace: {{ .Release.Namespace }}
 spec:
   ports:
     - name: http
-      port: {{ .Values.dashboard_deployment.container.port }}
+      port: {{ .Values.dashboardDeployment.container.port }}
       protocol: TCP
-      targetPort: {{ .Values.dashboard_deployment.container.port }}
+      targetPort: {{ .Values.dashboardDeployment.container.port }}
   selector:
-{{ include "tekton_dashboard.labelselector" . | indent 4 }}
+{{ include "tektonDashboard.labelselector" . | indent 4 }}

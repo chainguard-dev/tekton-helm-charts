@@ -1,6 +1,6 @@
 icon: https://github.com/cdfoundation/artwork/blob/main/tekton/additional-artwork/tekton_dashboard/color/TektonDashboard_color.svg
 
-dashboard_deployment:
+dashboardDeployment:
   replicas: 1
   container:
     image:

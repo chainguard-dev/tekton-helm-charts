@@ -27,10 +27,10 @@ spec:
         app.kubernetes.io/component: controller
         version: {{ .Chart.AppVersion | quote }}
     spec:
-      serviceAccountName: {{ template "tekton_chains.fullname" . }}-controller
+      serviceAccountName: {{ template "tektonChains.fullname" . }}-controller
       containers:
         - name: tekton-chains-controller
-          image: {{ template "tekton_chains.image" .Values.chains_deployment.image }}
+          image: {{ template "tektonChains.image" .Values.chainsDeployment.image }}
           volumeMounts:
             - name: signing-secrets
               mountPath: /etc/signing-secrets

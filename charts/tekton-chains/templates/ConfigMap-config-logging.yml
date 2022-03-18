@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "tekton_chains.fullname". }}-tenant-logging
+  name: {{ template "tektonChains.fullname". }}-tenant-logging
   namespace: {{ .Release.Namespace }}
   labels:
-{{ include "tekton_chains.labels" . | indent 4 }}
+{{ include "tektonChains.labels" . | indent 4 }}
 data:
-  {{- range $key, $val := .Values.tenant_logging }}
+  {{- range $key, $val := .Values.tenantLogging }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}

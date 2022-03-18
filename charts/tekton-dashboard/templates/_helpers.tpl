@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "tekton_dashboard.name" -}}
+{{- define "tektonDashboard.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "tekton_dashboard.fullname" -}}
+{{- define "tektonDashboard.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -24,16 +24,16 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 
-{{- define "tekton_dashboard.labels" -}}
-app.kubernetes.io/instance: {{ template "tekton_dashboard.fullname". }}
+{{- define "tektonDashboard.labels" -}}
+app.kubernetes.io/instance: {{ template "tektonDashboard.fullname". }}
 app.kubernetes.io/part-of: tekton-dashboard
 helm-release: {{ .Release.Name | quote }}
 helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version}}"
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 
-{{- define "tekton_dashboard.labelselector" -}}
-app.kubernetes.io/instance: {{ template "tekton_dashboard.fullname". }}
+{{- define "tektonDashboard.labelselector" -}}
+app.kubernetes.io/instance: {{ template "tektonDashboard.fullname". }}
 app.kubernetes.io/component: dashboard
 app.kubernetes.io/name: dashboard
 app.kubernetes.io/part-of: tekton-dashboard

@@ -3,13 +3,13 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
-{{ include "tekton_dashboard.labels" . | indent 4 }}
-  name: {{ template "tekton_dashboard.fullname". }}-backend
+{{ include "tektonDashboard.labels" . | indent 4 }}
+  name: {{ template "tektonDashboard.fullname". }}-backend
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ template "tekton_dashboard.fullname". }}-backend
+  name: {{ template "tektonDashboard.fullname". }}-backend
 subjects:
   - kind: ServiceAccount
-    name: {{ template "tekton_dashboard.fullname". }}-dashboard
+    name: {{ template "tektonDashboard.fullname". }}-dashboard
     namespace: {{ .Release.Namespace }}

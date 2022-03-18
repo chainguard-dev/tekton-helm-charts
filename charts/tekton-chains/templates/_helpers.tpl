@@ -1,11 +1,11 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "tekton_chains.name" -}}
+{{- define "tektonChains.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "tekton_chains.image" -}}
+{{- define "tektonChains.image" -}}
 {{- printf "%s:%s@%s" .repository .tag .digest -}}
 {{- end -}}
 
@@ -14,7 +14,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "tekton_chains.fullname" -}}
+{{- define "tektonChains.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -27,7 +27,7 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 {{- end }}
 
-{{ define "tekton_chains.labels" -}}
+{{ define "tektonChains.labels" -}}
 app.kubernetes.io/component: chains
 app.kubernetes.io/instance: default
 app.kubernetes.io/part-of: tekton-pipelines

@@ -24,7 +24,7 @@ metadata:
     pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
     version: {{ .Chart.AppVersion | quote }}
 spec:
-  replicas: {{ .Values.pipeline_deployment.replicas }}
+  replicas: {{ .Values.pipelineDeployment.replicas }}
   selector:
     matchLabels:
       app.kubernetes.io/name: controller
@@ -52,7 +52,7 @@ spec:
       serviceAccountName: {{ template "tekton_pipelines.fullname". }}-controller
       containers:
         - name: tekton-pipelines-controller
-          image: {{ template "pipeline_deployment.image" .Values.pipeline_deployment.image   }}
+          image: {{ template "pipeline_deployment.image" .Values.pipelineDeployment.image   }}
           args: [
             {{ template "pipeline_deployment.argsImages" . }}
           ]

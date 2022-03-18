@@ -20,6 +20,7 @@ metadata:
   labels:
 {{ include "tekton_pipelines.labels" . | indent 4 }}
 data:
-  {{- range $key, $val := .Values.config_leader_election }}
+  {{- range $key, $val := .Values.configLeaderElection }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
+

@@ -5,7 +5,7 @@ data:
 kind: ConfigMap
 metadata:
   labels:
-{{ include "tekton_dashboard.labels" . | indent 4 }}
-  name: {{ template "tekton_dashboard.fullname". }}-info
+{{ include "tektonDashboard.labels" . | indent 4 }}
+  name: {{ template "tektonDashboard.fullname". }}-info
   namespace: {{ .Release.Namespace }}
 

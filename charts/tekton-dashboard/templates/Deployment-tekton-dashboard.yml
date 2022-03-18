@@ -4,28 +4,28 @@ kind: Deployment
 metadata:
   labels:
     app: tekton-dashboard
-{{ include "tekton_dashboard.labels" . | indent 4 }}
+{{ include "tektonDashboard.labels" . | indent 4 }}
     app.kubernetes.io/version: {{ .Chart.AppVersion}}
     dashboard.tekton.dev/release: {{ .Chart.AppVersion}}
     version: {{ .Chart.AppVersion}}
-  name: {{ template "tekton_dashboard.fullname". }}
+  name: {{ template "tektonDashboard.fullname". }}
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: {{ .Values.dashboard_deployment.replicas  }}
+  replicas: {{ .Values.dashboardDeployment.replicas  }}
   selector:
     matchLabels:
-{{ include "tekton_dashboard.labelselector" . | indent 6 }}
+{{ include "tektonDashboard.labelselector" . | indent 6 }}
   template:
     metadata:
       labels:
         app: tekton-dashboard
-{{ include "tekton_dashboard.labelselector" . | indent 8 }}
+{{ include "tektonDashboard.labelselector" . | indent 8 }}
         app.kubernetes.io/version: {{ .Chart.AppVersion}}
       name: tekton-dashboard
     spec:
       containers:
         - args:
-            - --port={{ .Values.dashboard_deployment.container.port }}
+            - --port={{ .Values.dashboardDeployment.container.port }}
             - --logout-url=
             - --pipelines-namespace={{.Release.Namespace }}
             - --triggers-namespace={{.Release.Namespace }}
@@ -40,22 +40,22 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-          image: {{ template "dashboard.image" .Values.dashboard_deployment.container.image }}
+          image: {{ template "dashboard.image" .Values.dashboardDeployment.container.image }}
           livenessProbe:
             httpGet:
               path: /health
-              port: {{ .Values.dashboard_deployment.container.port }}
+              port: {{ .Values.dashboardDeployment.container.port }}
           name: tekton-dashboard
           ports:
-            - containerPort: {{ .Values.dashboard_deployment.container.port }}
+            - containerPort: {{ .Values.dashboardDeployment.container.port }}
           readinessProbe:
             httpGet:
               path: /readiness
-              port: {{ .Values.dashboard_deployment.container.port }}
+              port: {{ .Values.dashboardDeployment.container.port }}
       nodeSelector:
         kubernetes.io/os: linux
       securityContext:
         runAsNonRoot: true
         runAsUser: 65532
-      serviceAccountName: {{ template "tekton_dashboard.fullname". }}-dashboard
+      serviceAccountName: {{ template "tektonDashboard.fullname". }}-dashboard
       volumes: []
