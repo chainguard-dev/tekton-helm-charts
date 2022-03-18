@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -8,7 +7,9 @@ metadata:
     app.kubernetes.io/name: tekton-pipelines
     app.kubernetes.io/component: chains
     pipeline.tekton.dev/release: "devel"
-    version: "v0.7.0"
+    version: {{ .Chart.AppVersion | quote }}
+    helm-release: {{ .Release.Name | quote }}
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version}}"
 spec:
   replicas: 1
   selector:
@@ -19,17 +20,17 @@ spec:
       annotations:
         cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
       labels:
+        helm-release: {{ .Release.Name | quote }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version}}"
         app: tekton-chains-controller
         app.kubernetes.io/name: tekton-pipelines
         app.kubernetes.io/component: controller
-        # # tekton.dev/release value replaced with inputs.params.versionTag in pipeline/tekton/publish.yaml
-        # pipeline.tekton.dev/release: "devel"
-        version: "v0.7.0"
+        version: {{ .Chart.AppVersion | quote }}
     spec:
-      serviceAccountName: tekton-chains-controller
+      serviceAccountName: {{ template "tektonChains.fullname" . }}-controller
       containers:
         - name: tekton-chains-controller
-          image: gcr.io/tekton-releases/github.com/tektoncd/chains/cmd/controller:v0.7.0@sha256:7a4407056f73435bd869d0292ebdb788a99f22f26f4eb0dab59c6bcf7fd16fb6
+          image: {{ template "tektonChains.image" .Values.chainsDeployment.image }}
           volumeMounts:
             - name: signing-secrets
               mountPath: /etc/signing-secrets
@@ -58,17 +59,3 @@ spec:
                   path: oidc-token
                   expirationSeconds: 600 # Use as short-lived as possible.
                   audience: sigstore
-
-# Copyright 2021 The Tekton Authors
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.

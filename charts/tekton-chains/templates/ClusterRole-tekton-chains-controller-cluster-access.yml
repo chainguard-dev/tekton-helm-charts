@@ -2,16 +2,14 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: tekton-chains-controller-cluster-access
+  name: {{ template "tektonChains.fullname". }}-cluster
   labels:
-    app.kubernetes.io/component: chains
-    app.kubernetes.io/instance: default
-    app.kubernetes.io/part-of: tekton-pipelines
+{{ include "tektonChains.labels" . | indent 4 }}
 rules:
   - apiGroups: [""]
     # Controller needs to watch Pods created by TaskRuns to see them progress.
-    resources: ["pods"]
-    verbs: ["list", "watch"]
+    resources: ["pods","namespaces"]
+    verbs: ["list", "watch","get"]
     # Controller needs cluster access to all of the CRDs that it is responsible for
     # managing.
   - apiGroups: ["tekton.dev"]
