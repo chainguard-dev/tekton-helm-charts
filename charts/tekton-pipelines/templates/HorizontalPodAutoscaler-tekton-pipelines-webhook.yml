@@ -2,12 +2,12 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ template "tekton_pipelines.fullname". }}-webhook
+  name: {{ template "tektonPipelines.fullname". }}-webhook
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: webhook
     app.kubernetes.io/component: webhook
-{{ include "tekton_pipelines.labels" . | indent 4 }}
+{{ include "tektonPipelines.labels" . | indent 4 }}
     pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
     version: {{ .Chart.AppVersion | quote }}
 spec:

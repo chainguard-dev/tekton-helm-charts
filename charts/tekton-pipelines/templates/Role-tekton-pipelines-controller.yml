@@ -1,11 +1,11 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ template "tekton_pipelines.fullname". }}-controller
+  name: {{ template "tektonPipelines.fullname". }}-controller
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/component: controller
-{{ include "tekton_pipelines.labels" . | indent 4 }}
+{{ include "tektonPipelines.labels" . | indent 4 }}
 rules:
   - apiGroups: [""]
     resources: ["configmaps"]
@@ -14,7 +14,7 @@ rules:
   - apiGroups: [""]
     resources: ["configmaps"]
     verbs: ["get"]
-    resourceNames: ["{{ template "tekton_pipelines.fullname". }}-logging", "{{ template "tekton_pipelines.fullname". }}-observability", "{{ template "tekton_pipelines.fullname". }}-artifact-bucket", "{{ template "tekton_pipelines.fullname". }}-artifact-pvc", "{{ template "tekton_pipelines.fullname". }}-feature-flags", "{{ template "tekton_pipelines.fullname". }}-leader-election", "{{ template "tekton_pipelines.fullname". }}-registry-cert"]
+    resourceNames: [ "{{ template "tektonPipelines.fullname". }}-logging", "{{ template "tektonPipelines.fullname". }}-observability", "{{ template "tektonPipelines.fullname". }}-artifact-bucket", "{{ template "tektonPipelines.fullname". }}-artifact-pvc", "{{ template "tektonPipelines.fullname". }}-feature-flags", "{{ template "tektonPipelines.fullname". }}-leader-election", "{{ template "tektonPipelines.fullname". }}-registry-cert"]
   - apiGroups: ["policy"]
     resources: ["podsecuritypolicies"]
     resourceNames: ["tekton-pipelines"]

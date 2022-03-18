@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "tekton_pipelines.fullname" . }}-controller
+  name: {{ template "tektonPipelines.fullname" . }}-controller
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: controller
     app.kubernetes.io/component: controller
-{{ include "tekton_pipelines.labels" . | indent 4 }}
+{{ include "tektonPipelines.labels" . | indent 4 }}
     pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
     version: {{ .Chart.AppVersion | quote }}
 spec:
@@ -15,15 +15,15 @@ spec:
     matchLabels:
       app.kubernetes.io/name: controller
       app.kubernetes.io/component: controller
-{{ include "tekton_pipelines.labelselector" . | indent 6 }}
+{{ include "tektonPipelines.labelselector" . | indent 6 }}
   template:
     metadata:
       labels:
-{{ include "tekton_pipelines.labels" . | indent 8 }}
+{{ include "tektonPipelines.labels" . | indent 8 }}
         app.kubernetes.io/name: controller
         app.kubernetes.io/component: controller
         pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
-        app: {{ template "tekton_pipelines.fullname" . }}-controller
+        app: {{ template "tektonPipelines.fullname" . }}-controller
         version: {{ .Chart.AppVersion | quote }}
     spec:
       affinity:
@@ -35,12 +35,12 @@ spec:
                     operator: NotIn
                     values:
                       - windows
-      serviceAccountName: {{ template "tekton_pipelines.fullname". }}-controller
+      serviceAccountName: {{ template "tektonPipelines.fullname". }}-controller
       containers:
         - name: tekton-pipelines-controller
-          image: {{ template "pipeline_deployment.image" .Values.pipelineDeployment.image   }}
+          image: {{ template "pipelineDeployment.image" .Values.pipelineDeployment.image   }}
           args: [
-            {{ template "pipeline_deployment.argsImages" . }}
+            {{ template "pipelineDeployment.argsImages" . }}
           ]
           volumeMounts:
             - name: config-logging
@@ -66,19 +66,19 @@ spec:
             # the controller's Role in 200-role.yaml to include the new
             # values in the "configmaps" "get" rule.
             - name: CONFIG_DEFAULTS_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-defaults
+              value: {{ template "tektonPipelines.fullname". }}-defaults
             - name: CONFIG_LOGGING_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-logging
+              value: {{ template "tektonPipelines.fullname". }}-logging
             - name: CONFIG_OBSERVABILITY_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-observability
+              value: {{ template "tektonPipelines.fullname". }}-observability
             - name: CONFIG_ARTIFACT_BUCKET_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-artifact-bucket
+              value: {{ template "tektonPipelines.fullname". }}-artifact-bucket
             - name: CONFIG_ARTIFACT_PVC_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-artifact-pvc
+              value: {{ template "tektonPipelines.fullname". }}-artifact-pvc
             - name: CONFIG_FEATURE_FLAGS_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-feature-flags
+              value: {{ template "tektonPipelines.fullname". }}-feature-flags
             - name: CONFIG_LEADERELECTION_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-leader-election
+              value: {{ template "tektonPipelines.fullname". }}-leader-election
             - name: SSL_CERT_FILE
               value: /etc/config-registry-cert/cert
             - name: SSL_CERT_DIR
@@ -119,7 +119,7 @@ spec:
       volumes:
         - name: config-logging
           configMap:
-            name: {{ template "tekton_pipelines.fullname". }}-logging
+            name: {{ template "tektonPipelines.fullname". }}-logging
         - name: config-registry-cert
           configMap:
-            name: {{ template "tekton_pipelines.fullname". }}-registry-cert
+            name: {{ template "tektonPipelines.fullname". }}-registry-cert

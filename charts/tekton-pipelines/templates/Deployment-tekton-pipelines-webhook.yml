@@ -5,10 +5,10 @@ metadata:
   # Note: the Deployment name must be the same as the Service name specified in
   # config/400-webhook-service.yaml. If you change this name, you must also
   # change the value of WEBHOOK_SERVICE_NAME below.
-  name: {{ template "tekton_pipelines.fullname". }}-webhook
+  name: {{ template "tektonPipelines.fullname". }}-webhook
   namespace: {{ .Release.Namespace }}
   labels:
-{{ include "tekton_pipelines.labels" . | indent 4 }}
+{{ include "tektonPipelines.labels" . | indent 4 }}
     app.kubernetes.io/name: webhook
     app.kubernetes.io/component: webhook
     pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
@@ -19,13 +19,13 @@ spec:
     matchLabels:
       app.kubernetes.io/name: webhook
       app.kubernetes.io/component: webhook
-{{ include "tekton_pipelines.labelselector" . | indent 6 }}
+{{ include "tektonPipelines.labelselector" . | indent 6 }}
   template:
     metadata:
       labels:
         app.kubernetes.io/name: webhook
         app.kubernetes.io/component: webhook
-{{ include "tekton_pipelines.labels" . | indent 8 }}
+{{ include "tektonPipelines.labels" . | indent 8 }}
         pipeline.tekton.dev/release: {{ .Chart.AppVersion | quote }}
         app: tekton-pipelines-webhook
         version: {{ .Chart.AppVersion | quote }}
@@ -46,13 +46,13 @@ spec:
                   matchLabels:
                     app.kubernetes.io/name: webhook
                     app.kubernetes.io/component: webhook
-{{ include "tekton_pipelines.labels" . | indent 20 }}
+{{ include "tektonPipelines.labels" . | indent 20 }}
                 topologyKey: kubernetes.io/hostname
               weight: 100
-      serviceAccountName: {{ template "tekton_pipelines.fullname". }}-webhook
+      serviceAccountName: {{ template "tektonPipelines.fullname". }}-webhook
       containers:
         - name: webhook
-          image: {{ template "pipelines_webhook.image" .Values.webhook.image }}
+          image: {{ template "pipelinesWebhook.image" .Values.webhook.image }}
           resources:
 {{ .Values.webhook.resources | toYaml | indent 12 }}
           env:
@@ -64,23 +64,23 @@ spec:
             # the webhook's Role in 200-role.yaml to include the new
             # values in the "configmaps" "get" rule.
             - name: CONFIG_ARTIFACT_BUCKET_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-artifact-bucket
+              value: {{ template "tektonPipelines.fullname". }}-artifact-bucket
             - name: CONFIG_ARTIFACT_PVC_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-artifact-pvc
+              value: {{ template "tektonPipelines.fullname". }}-artifact-pvc
             - name: CONFIG_DEFAULTS_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-defaults
+              value: {{ template "tektonPipelines.fullname". }}-defaults
             - name: CONFIG_LOGGING_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-logging
+              value: {{ template "tektonPipelines.fullname". }}-logging
             - name: CONFIG_OBSERVABILITY_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-observability
+              value: {{ template "tektonPipelines.fullname". }}-observability
             - name: CONFIG_LEADERELECTION_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-leader-election
+              value: {{ template "tektonPipelines.fullname". }}-leader-election
             - name: CONFIG_FEATURE_FLAGS_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-feature-flags
+              value: {{ template "tektonPipelines.fullname". }}-feature-flags
             - name: WEBHOOK_SERVICE_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-webhook
+              value: {{ template "tektonPipelines.fullname". }}-webhook
             - name: WEBHOOK_SECRET_NAME
-              value: {{ template "tekton_pipelines.fullname". }}-webhook-certs
+              value: {{ template "tektonPipelines.fullname". }}-webhook-certs
             - name: METRICS_DOMAIN
               value: tekton.dev/pipeline
           securityContext:

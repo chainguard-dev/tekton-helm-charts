@@ -1,16 +1,16 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ template "tekton_pipelines.fullname". }}-controller-leaderelection
+  name: {{ template "tektonPipelines.fullname". }}-controller-leaderelection
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/component: controller
-{{ include "tekton_pipelines.labels" . | indent 4 }}
+{{ include "tektonPipelines.labels" . | indent 4 }}
 subjects:
   - kind: ServiceAccount
-    name: {{ template "tekton_pipelines.fullname". }}-controller
+    name: {{ template "tektonPipelines.fullname". }}-controller
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
-  name: {{ template "tekton_pipelines.fullname". }}-leader-election
+  name: {{ template "tektonPipelines.fullname". }}-leader-election
   apiGroup: rbac.authorization.k8s.io

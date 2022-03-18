@@ -1,10 +1,10 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ template "tekton_pipelines.fullname". }}-info
+  name: {{ template "tektonPipelines.fullname". }}-info
   namespace: {{ .Release.Namespace }}
   labels:
-{{ include "tekton_pipelines.labels" . | indent 4 }}
+{{ include "tektonPipelines.labels" . | indent 4 }}
 rules:
   # All system:authenticated users needs to have access
   # of the pipelines-info ConfigMap even if they don't
@@ -12,5 +12,5 @@ rules:
   # installed namespace.
   - apiGroups: [""]
     resources: ["configmaps"]
-    resourceNames: ["{{ template "tekton_pipelines.fullname". }}-info"]
+    resourceNames: ["{{ template "tektonPipelines.fullname". }}-info"]
     verbs: ["get"]

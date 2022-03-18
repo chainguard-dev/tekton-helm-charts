@@ -1,11 +1,11 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ template "tekton_pipelines.fullname". }}-webhook
+  name: {{ template "tektonPipelines.fullname". }}-webhook
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/component: webhook
-{{ include "tekton_pipelines.labels" . | indent 4 }}
+{{ include "tektonPipelines.labels" . | indent 4 }}
 rules:
   - apiGroups: [""]
     resources: ["configmaps"]
@@ -14,7 +14,7 @@ rules:
   - apiGroups: [""]
     resources: ["configmaps"]
     verbs: ["get"]
-    resourceNames: ["{{ template "tekton_pipelines.fullname". }}-logging", "{{ template "tekton_pipelines.fullname". }}-observability", "{{ template "tekton_pipelines.fullname". }}-leader-election", "{{ template "tekton_pipelines.fullname". }}-feature-flags"]
+    resourceNames: [ "{{ template "tektonPipelines.fullname". }}-logging", "{{ template "tektonPipelines.fullname". }}-observability", "{{ template "tektonPipelines.fullname". }}-leader-election", "{{ template "tektonPipelines.fullname". }}-feature-flags"]
   - apiGroups: [""]
     resources: ["secrets"]
     verbs: ["list", "watch"]
@@ -24,8 +24,8 @@ rules:
   - apiGroups: [""]
     resources: ["secrets"]
     verbs: ["get", "update"]
-    resourceNames: ["{{ template "tekton_pipelines.fullname". }}-webhook-certs"]
+    resourceNames: ["{{ template "tektonPipelines.fullname". }}-webhook-certs"]
   - apiGroups: ["policy"]
     resources: ["podsecuritypolicies"]
-    resourceNames: ["{{ template "tekton_pipelines.fullname". }}"]
+    resourceNames: ["{{ template "tektonPipelines.fullname". }}"]
     verbs: ["use"]

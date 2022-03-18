@@ -2,10 +2,10 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ template "tekton_pipelines.fullname". }}-cluster
+  name: {{ template "tektonPipelines.fullname". }}-cluster
   labels:
     app.kubernetes.io/component: controller
-{{ include "tekton_pipelines.labels" . | indent 4 }}
+{{ include "tektonPipelines.labels" . | indent 4 }}
 rules:
   - apiGroups: [""]
     # Controller needs to watch Pods created by TaskRuns to see them progress.

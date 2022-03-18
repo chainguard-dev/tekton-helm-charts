@@ -2,16 +2,16 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ template "tekton_pipelines.fullname". }}-controller-access
+  name: {{ template "tektonPipelines.fullname". }}-controller-access
   labels:
     app.kubernetes.io/component: controller
-{{ include "tekton_pipelines.labels" . | indent 4 }}
+{{ include "tektonPipelines.labels" . | indent 4 }}
 subjects:
   - kind: ServiceAccount
-    name: {{ template "tekton_pipelines.fullname". }}-controller
+    name: {{ template "tektonPipelines.fullname". }}-controller
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: {{ template "tekton_pipelines.fullname". }}-cluster
+  name: {{ template "tektonPipelines.fullname". }}-cluster
   apiGroup: rbac.authorization.k8s.io
 

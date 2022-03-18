@@ -1,10 +1,10 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ template "tekton_pipelines.fullname". }}-leader-election
+  name: {{ template "tektonPipelines.fullname". }}-leader-election
   namespace: {{ .Release.Namespace }}
   labels:
-{{ include "tekton_pipelines.labels" . | indent 4 }}
+{{ include "tektonPipelines.labels" . | indent 4 }}
 rules:
   # We uses leases for leaderelection
   - apiGroups: ["coordination.k8s.io"]
