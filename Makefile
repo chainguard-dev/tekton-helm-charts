@@ -42,9 +42,6 @@ upgrade: build
 helm_debug:
 	helm install --create-namespace --namespace ${NAMESPACE} --dry-run --debug ${CHART_NAME} ${CHART_DIR}
 
-test:
-	kubectl apply -f tests/${CHART_NAME}
-
 ct_lint:
 	ct lint --config ct.yaml
 
@@ -53,12 +50,6 @@ ct_install:
 
 ct_install_chart:
 	ct install --chart-dirs charts/ --charts ${CHART_DIR}
-
-test_task:
-	kubectl create -f ./tests/${CHART_NAME}
-	tkn task ls
-	tkn task describe echo-hello-world
-	kubectl delete -f ./tests/${CHART_NAME}
 
 fetch_pipelines:
 	rm -rf ./charts/tekton-pipeline/templates/
