@@ -1,9 +1,10 @@
 apiVersion: v2
 name: tekton-dashboard
-description: A Helm chart for Kubernetes
-icon: https://github.com/tektoncd/chains/blob/main/tekton_chains-color.png
+description: A Helm chart for Tekton Dashboards
+home: https://github.com/tektoncd/dashboard
+icon: https://github.com/cdfoundation/artwork/blob/main/tekton/additional-artwork/tekton_dashboard/color/TektonDashboard_color.svg
 type: application
 
-version: 0.2.0
+version: 0.2.1
 
 appVersion: "v0.24.1"

@@ -1,9 +1,10 @@
 apiVersion: v2
 name: tekton-chains
-description: A Helm chart for Kubernetes
-
+description: A Helm chart for Tekton Chains
+icon: https://github.com/tektoncd/chains/blob/main/tekton_chains-color.png
+home: https://github.com/tektoncd/chains
 type: application
 
-version: "0.2.2"
+version: 0.2.3
 
 appVersion: "v0.8.0"

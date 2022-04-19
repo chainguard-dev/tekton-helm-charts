@@ -47,11 +47,5 @@ jobs:
       - name: Create kind cluster
         uses: helm/kind-action@v1.2.0
 
-      - name: Install Tekton Pipelines
-        run: "make upgrade CHART_NAME=tekton-pipelines NAMESPACE=tekton-pipelines"
-
-      - name: Install Tekton Chains
-        run: "make upgrade CHART_NAME=tekton-chains NAMESPACE=tekton-chains"
-
-      - name: Install Tekton Dashboard
-        run: "make upgrade CHART_NAME=tekton-dashboard NAMESPACE=tekton-pipelines"
+      - name: Run chart-testing (install)
+        run: ct install --config ct-install.yaml
