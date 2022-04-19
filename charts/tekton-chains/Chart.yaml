@@ -5,6 +5,6 @@ icon: https://github.com/tektoncd/chains/blob/main/tekton_chains-color.png
 home: https://github.com/tektoncd/chains
 type: application
 
-version: 0.2.3
+version: 0.2.4
 
 appVersion: "v0.8.0"

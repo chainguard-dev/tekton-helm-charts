@@ -5,6 +5,6 @@ home: https://github.com/tektoncd/dashboard
 icon: https://github.com/cdfoundation/artwork/blob/main/tekton/additional-artwork/tekton_dashboard/color/TektonDashboard_color.svg
 type: application
 
-version: 0.2.1
+version: 0.2.2
 
 appVersion: "v0.24.1"
