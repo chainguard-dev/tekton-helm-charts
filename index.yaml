@@ -3,6 +3,18 @@ entries:
   tekton-chains:
   - apiVersion: v2
     appVersion: v0.8.0
+    created: "2022-04-19T20:47:04.920754641Z"
+    description: A Helm chart for Tekton Chains
+    digest: 44f85e3e8de91ef256edc50c14300a0b103fb99658c7e99bc9cf945d8d2ac0ce
+    home: https://github.com/tektoncd/chains
+    icon: https://github.com/tektoncd/chains/blob/main/tekton_chains-color.png
+    name: tekton-chains
+    type: application
+    urls:
+    - https://github.com/chainguard-dev/tekton-helm-charts/releases/download/tekton-chains-0.2.4/tekton-chains-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v2
+    appVersion: v0.8.0
     created: "2022-04-19T18:34:03.395865583Z"
     description: A Helm chart for Tekton Chains
     digest: 36ff314a65e731e2a3f2081afabbfcdeecaab21e72d4d1f189298a282013b4d4
@@ -14,6 +26,18 @@ entries:
     - https://github.com/chainguard-dev/tekton-helm-charts/releases/download/tekton-chains-0.2.3/tekton-chains-0.2.3.tgz
     version: 0.2.3
   tekton-dashboard:
+  - apiVersion: v2
+    appVersion: v0.24.1
+    created: "2022-04-19T20:47:05.075857653Z"
+    description: A Helm chart for Tekton Dashboards
+    digest: 403beddef024a4e67ccf4162fadf45a9dc70b7008cb515dbbfb55eac497bcb06
+    home: https://github.com/tektoncd/dashboard
+    icon: https://github.com/cdfoundation/artwork/blob/main/tekton/additional-artwork/tekton_dashboard/color/TektonDashboard_color.svg
+    name: tekton-dashboard
+    type: application
+    urls:
+    - https://github.com/chainguard-dev/tekton-helm-charts/releases/download/tekton-dashboard-0.2.2/tekton-dashboard-0.2.2.tgz
+    version: 0.2.2
   - apiVersion: v2
     appVersion: v0.24.1
     created: "2022-04-19T18:34:03.597000091Z"
@@ -29,6 +53,18 @@ entries:
   tekton-pipelines:
   - apiVersion: v2
     appVersion: v0.32.1
+    created: "2022-04-19T20:47:05.2401024Z"
+    description: A Helm chart for Tekton pipelines
+    digest: c9db8061eb3b3e230a370aa61395c89b752112c7e2c28845dd36047df079ccbe
+    home: https://github.com/tektoncd/dashboard
+    icon: https://github.com/tektoncd/pipeline/blob/main/pipe.png?raw=true
+    name: tekton-pipelines
+    type: application
+    urls:
+    - https://github.com/chainguard-dev/tekton-helm-charts/releases/download/tekton-pipelines-0.2.3/tekton-pipelines-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v2
+    appVersion: v0.32.1
     created: "2022-04-19T18:34:03.779302555Z"
     description: A Helm chart for Tekton pipelines
     digest: f6079bce6be818ddb71eb8307d0f7ba31f937f45615f1c4766cf1ddaf016eaca
@@ -39,4 +75,4 @@ entries:
     urls:
     - https://github.com/chainguard-dev/tekton-helm-charts/releases/download/tekton-pipelines-0.2.2/tekton-pipelines-0.2.2.tgz
     version: 0.2.2
-generated: "2022-04-19T18:34:03.779308355Z"
+generated: "2022-04-19T20:47:05.240116801Z"
