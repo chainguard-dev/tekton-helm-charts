@@ -4,8 +4,8 @@ chainsDeployment:
   replicas: 1
   image:
     repository: "gcr.io/tekton-releases/github.com/tektoncd/chains/cmd/controller"
-    tag: "v0.8.0"
-    digest: "sha256:599b81739a1171874ee506c314686ff854c64b909df80d9ed558ccce115cee95"
+    tag: "v0.9.0"
+    digest: "sha256:2bd37672a9e472c79c64f42b95e362db16870e28a90f3b17fee8faf952e79b4b"
 
 tenantLogging:
   # Common configuration for all knative codebase
