@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tekton-chains-controller
-  namespace: tekton-chains
+  namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: tekton-pipelines
     app.kubernetes.io/component: chains
