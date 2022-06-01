@@ -9,4 +9,4 @@ metadata:
 data:
   loglevel.controller: {{ .Values.configLogging.loglevelController | quote }}
   loglevel.webhook: {{ .Values.configLogging.loglevelWebhook | quote }}
-  zap-logger-config: {{ .Values.configLogging.zapLoggerConfig | quote }}
+  zap-logger-config: {{ .Values.configLogging.zapLoggerConfig | quote }} 

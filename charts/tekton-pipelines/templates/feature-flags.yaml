@@ -19,4 +19,4 @@ data:
   running-in-environment-with-injected-sidecars: {{ .Values.featureFlags.runningInEnvironmentWithInjectedSidecars
     | quote }}
   send-cloudevents-for-runs: {{ .Values.featureFlags.sendCloudeventsForRuns | quote
-    }}
+    }} 

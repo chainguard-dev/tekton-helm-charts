@@ -15,4 +15,4 @@ webhooks:
       namespace: '{{ .Release.Namespace }}'
   failurePolicy: Fail
   name: validation.webhook.pipeline.tekton.dev
-  sideEffects: None
+  sideEffects: None 

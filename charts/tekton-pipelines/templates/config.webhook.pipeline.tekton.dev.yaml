@@ -18,4 +18,4 @@ webhooks:
   objectSelector:
     matchLabels:
       app.kubernetes.io/part-of: tekton-pipelines
-  sideEffects: None
+  sideEffects: None 

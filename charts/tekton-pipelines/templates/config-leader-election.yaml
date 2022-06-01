@@ -9,4 +9,4 @@ metadata:
 data:
   lease-duration: {{ .Values.configLeaderElection.leaseDuration | quote }}
   renew-deadline: {{ .Values.configLeaderElection.renewDeadline | quote }}
-  retry-period: {{ .Values.configLeaderElection.retryPeriod | quote }}
+  retry-period: {{ .Values.configLeaderElection.retryPeriod | quote }} 

@@ -7,4 +7,4 @@ metadata:
     app.kubernetes.io/part-of: tekton-pipelines
   {{- include "tekton-pipelines.labels" . | nindent 4 }}
 data:
-  _example: {{ .Values.configDefaults.Example | quote }}
+  _example: {{ .Values.configDefaults.Example | quote }} 

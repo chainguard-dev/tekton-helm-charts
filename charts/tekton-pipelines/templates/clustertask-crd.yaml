@@ -53,4 +53,4 @@ status:
     kind: ""
     plural: ""
   conditions: []
-  storedVersions: []
+  storedVersions: [] 

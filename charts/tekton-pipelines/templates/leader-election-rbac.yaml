@@ -18,4 +18,4 @@ rules:
   - update
   - delete
   - patch
-  - watch
+  - watch 

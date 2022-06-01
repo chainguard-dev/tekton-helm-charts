@@ -32,4 +32,4 @@ subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
   name: system:authenticated
-  namespace: '{{ .Release.Namespace }}'
+  namespace: '{{ .Release.Namespace }}' 
