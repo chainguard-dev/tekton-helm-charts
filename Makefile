@@ -51,6 +51,12 @@ ct_install:
 ct_install_chart:
 	ct install --chart-dirs charts/ --charts ${CHART_DIR}
 
+# Requires helmify to be installed https://github.com/arttor/helmify
+update_pipelines:
+	wget https://github.com/tektoncd/pipeline/releases/download/${PIPELINE_VERSION}/release.yaml -O release.yaml
+	cat release.yaml | helmify charts/tekton-pipelines
+	rm -f release.yaml
+
 fetch_pipelines:
 	rm -rf ./charts/tekton-pipeline/templates/
 	mkdir -p ./charts/tekton-pipeline/templates
