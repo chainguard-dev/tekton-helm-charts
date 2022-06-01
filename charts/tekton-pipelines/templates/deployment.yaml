@@ -111,8 +111,7 @@ spec:
           value: tekton.dev/pipeline
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ .Values.kubernetesClusterDomain }}
-        image: {{ .Values.controller.tektonPipelinesController.image.repository }}:{{ .Values.controller.tektonPipelinesController.image.tag
-          | default .Chart.AppVersion }}
+        image: {{ .Values.controller.tektonPipelinesController.image.repository }}:{{ .Values.controller.tektonPipelinesController.image.tag| default .Chart.AppVersion }}
         livenessProbe:
           httpGet:
             path: /health
@@ -236,8 +235,7 @@ spec:
           value: tekton.dev/pipeline
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ .Values.kubernetesClusterDomain }}
-        image: {{ .Values.webhook.webhook.image.repository }}:{{ .Values.webhook.webhook.image.tag
-          | default .Chart.AppVersion }}
+        image: {{ .Values.webhook.webhook.image.repository }}:{{ .Values.webhook.webhook.image.tag          | default .Chart.AppVersion }}
         livenessProbe:
           httpGet:
             path: /health
