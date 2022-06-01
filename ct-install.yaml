@@ -4,5 +4,3 @@ validate-maintainers: false
 remote: origin
 target-branch: main
 helm-extra-args: "--timeout 1000s"
-chart-repos:
-  - tekton=https://chainguard.github.io/tekton-helm-charts
