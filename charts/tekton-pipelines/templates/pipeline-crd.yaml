@@ -3,20 +3,20 @@ kind: CustomResourceDefinition
 metadata:
   name: pipelines.tekton.dev
   annotations:
-    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "tekton-pipelines.fullname" . }}-
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "tektonPipelines.fullname" . }}-
   labels:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
     pipeline.tekton.dev/release: v0.36.0
     version: v0.36.0
-  {{- include "tekton-pipelines.labels" . | nindent 4 }}
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
 spec:
   conversion:
     strategy: Webhook
     webhook:
       clientConfig:
         service:
-          name: '{{ include "tekton-pipelines.fullname" . }}-webhook'
+          name: '{{ include "tektonPipelines.fullname" . }}-webhook'
           namespace: '{{ .Release.Namespace }}'
       conversionReviewVersions:
       - v1beta1

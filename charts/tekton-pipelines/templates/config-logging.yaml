@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-  {{- include "tekton-pipelines.labels" . | nindent 4 }}
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
 data:
   loglevel.controller: {{ .Values.configLogging.loglevelController | quote }}
   loglevel.webhook: {{ .Values.configLogging.loglevelWebhook | quote }}

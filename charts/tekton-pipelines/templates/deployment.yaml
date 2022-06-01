@@ -1,27 +1,27 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ include "tekton-pipelines.fullname" . }}-controller
+  name: {{ include "tektonPipelines.fullname" . }}-controller
   labels:
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-  {{- include "tekton-pipelines.labels" . | nindent 4 }}
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ include "tekton-pipelines.fullname" . }}-webhook
+  name: {{ include "tektonPipelines.fullname" . }}-webhook
   labels:
     app.kubernetes.io/component: webhook
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
-  {{- include "tekton-pipelines.labels" . | nindent 4 }}
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "tekton-pipelines.fullname" . }}-controller
+  name: {{ include "tektonPipelines.fullname" . }}-controller
   labels:
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: default
@@ -30,7 +30,7 @@ metadata:
     app.kubernetes.io/version: v0.36.0
     pipeline.tekton.dev/release: v0.36.0
     version: v0.36.0
-  {{- include "tekton-pipelines.labels" . | nindent 4 }}
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.controller.replicas }}
   selector:
@@ -39,7 +39,7 @@ spec:
       app.kubernetes.io/instance: default
       app.kubernetes.io/name: controller
       app.kubernetes.io/part-of: tekton-pipelines
-    {{- include "tekton-pipelines.selectorLabels" . | nindent 6 }}
+    {{- include "tektonPipelines.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
@@ -51,7 +51,7 @@ spec:
         app.kubernetes.io/version: v0.36.0
         pipeline.tekton.dev/release: v0.36.0
         version: v0.36.0
-      {{- include "tekton-pipelines.selectorLabels" . | nindent 8 }}
+      {{- include "tektonPipelines.selectorLabels" . | nindent 8 }}
     spec:
       affinity:
         nodeAffinity:
@@ -150,7 +150,7 @@ spec:
           name: config-logging
         - mountPath: /etc/config-registry-cert
           name: config-registry-cert
-      serviceAccountName: {{ include "tekton-pipelines.fullname" . }}-controller
+      serviceAccountName: {{ include "tektonPipelines.fullname" . }}-controller
       volumes:
       - configMap:
           name: config-logging
@@ -162,7 +162,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "tekton-pipelines.fullname" . }}-webhook
+  name: {{ include "tektonPipelines.fullname" . }}-webhook
   labels:
     app.kubernetes.io/component: webhook
     app.kubernetes.io/instance: default
@@ -171,7 +171,7 @@ metadata:
     app.kubernetes.io/version: v0.36.0
     pipeline.tekton.dev/release: v0.36.0
     version: v0.36.0
-  {{- include "tekton-pipelines.labels" . | nindent 4 }}
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.webhook.replicas }}
   selector:
@@ -180,7 +180,7 @@ spec:
       app.kubernetes.io/instance: default
       app.kubernetes.io/name: webhook
       app.kubernetes.io/part-of: tekton-pipelines
-    {{- include "tekton-pipelines.selectorLabels" . | nindent 6 }}
+    {{- include "tektonPipelines.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
@@ -192,7 +192,7 @@ spec:
         app.kubernetes.io/version: v0.36.0
         pipeline.tekton.dev/release: v0.36.0
         version: v0.36.0
-      {{- include "tekton-pipelines.selectorLabels" . | nindent 8 }}
+      {{- include "tektonPipelines.selectorLabels" . | nindent 8 }}
     spec:
       affinity:
         nodeAffinity:
@@ -272,4 +272,4 @@ spec:
             - all
           runAsGroup: 65532
           runAsUser: 65532
-      serviceAccountName: {{ include "tekton-pipelines.fullname" . }}-webhook 
+      serviceAccountName: {{ include "tektonPipelines.fullname" . }}-webhook

@@ -3,10 +3,10 @@ kind: CustomResourceDefinition
 metadata:
   name: resolutionrequests.resolution.tekton.dev
   annotations:
-    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "tekton-pipelines.fullname" . }}-
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "tektonPipelines.fullname" . }}-
   labels:
     resolution.tekton.dev/release: devel
-  {{- include "tekton-pipelines.labels" . | nindent 4 }}
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
 spec:
   group: resolution.tekton.dev
   names:

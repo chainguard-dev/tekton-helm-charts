@@ -1,7 +1,7 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "tekton-pipelines.fullname" . }}-webhook
+  name: {{ include "tektonPipelines.fullname" . }}-webhook
   labels:
     app.kubernetes.io/component: webhook
     app.kubernetes.io/instance: default
@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/version: v0.36.0
     pipeline.tekton.dev/release: v0.36.0
     version: v0.36.0
-  {{- include "tekton-pipelines.labels" . | nindent 4 }}
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
 spec:
   maxReplicas: 5
   metrics:
@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "tekton-pipelines.fullname" . }}-webhook
+  name: {{ include "tektonPipelines.fullname" . }}-webhook
   labels:
     app: tekton-pipelines-webhook
     app.kubernetes.io/component: webhook
@@ -37,7 +37,7 @@ metadata:
     app.kubernetes.io/version: v0.36.0
     pipeline.tekton.dev/release: v0.36.0
     version: v0.36.0
-  {{- include "tekton-pipelines.labels" . | nindent 4 }}
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.webhook.type }}
   selector:
@@ -45,6 +45,6 @@ spec:
     app.kubernetes.io/instance: default
     app.kubernetes.io/name: webhook
     app.kubernetes.io/part-of: tekton-pipelines
-  {{- include "tekton-pipelines.selectorLabels" . | nindent 4 }}
+  {{- include "tektonPipelines.selectorLabels" . | nindent 4 }}
   ports:
 	{{- .Values.webhook.ports | toYaml | nindent 2 -}} 

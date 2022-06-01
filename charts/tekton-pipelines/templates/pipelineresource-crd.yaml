@@ -3,13 +3,13 @@ kind: CustomResourceDefinition
 metadata:
   name: pipelineresources.tekton.dev
   annotations:
-    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "tekton-pipelines.fullname" . }}-
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "tektonPipelines.fullname" . }}-
   labels:
     app.kubernetes.io/instance: default
     app.kubernetes.io/part-of: tekton-pipelines
     pipeline.tekton.dev/release: v0.36.0
     version: v0.36.0
-  {{- include "tekton-pipelines.labels" . | nindent 4 }}
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
 spec:
   group: tekton.dev
   names:

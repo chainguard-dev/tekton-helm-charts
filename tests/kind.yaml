@@ -1,6 +1,6 @@
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
-name: tekton-1
+name: tekton
 nodes:
   - role: control-plane
   - role: worker
