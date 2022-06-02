@@ -59,4 +59,6 @@ Each new release will have new values for things like images etc.
 
 4. Verify the charts install with `ct install --config ct.yaml`
 
-5. Commit changes, merge install master will deploy new charts.
+5. Update the Chart's readme [helm-docs](https://github.com/norwoodj/helm-docs)
+
+6. Commit changes, merge to main will deploy new charts.
