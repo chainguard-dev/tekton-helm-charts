@@ -1,0 +1,21 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: {{ include "tektonPipelines.fullname" . }}-config.webhook.pipeline.tekton.dev
+  annotations:
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "tektonPipelines.fullname" . }}-
+  labels:
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: '{{ include "tektonPipelines.fullname" . }}-webhook'
+      namespace: '{{ .Release.Namespace }}'
+  failurePolicy: Fail
+  name: config.webhook.pipeline.tekton.dev
+  objectSelector:
+    matchLabels:
+      app.kubernetes.io/part-of: tekton-pipelines
+  sideEffects: None 

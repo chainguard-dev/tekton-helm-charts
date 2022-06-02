@@ -23,37 +23,41 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 {{- end }}
 
-
-{{- define "tektonPipelines.labels" -}}
-app.kubernetes.io/instance: {{ template "tektonPipelines.fullname". }}
-app.kubernetes.io/part-of: tekton-pipelines
-helm-release: {{ .Release.Name | quote }}
-helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version}}"
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{/*
+Create chart name and version as used by the chart label.
+*/}}
+{{- define "tektonPipelines.chart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
-
-{{- define "tektonPipelines.labelselector" -}}
-app.kubernetes.io/instance: {{ template "tektonPipelines.fullname". }}
-app.kubernetes.io/part-of: tekton-pipelines
-{{- end }}
-
 
 {{/*
-Create the image path for the passed in image field
+Common labels
 */}}
-{{- define "pipelineDeployment.image" -}}
-{{- printf "%s:%s@%s" .repository .tag .digest -}}
-{{- end -}}
+{{- define "tektonPipelines.labels" -}}
+helm.sh/chart: {{ include "tektonPipelines.chart" . }}
+{{ include "tektonPipelines.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
 
-{{- define "pipelinesWebhook.image" -}}
-{{- printf "%s:%s@%s" .repository .tag .digest -}}
-{{- end -}}
+{{/*
+Selector labels
+*/}}
+{{- define "tektonPipelines.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "tektonPipelines.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
 
-{{- define "pipelineDeployment.argsImages" -}}
-{{- $list := list -}}
-{{- range $k, $v := .Values.pipelineDeployment.args -}}
-{{- $list = append $list (printf "\"-%s\",\"%s\"" $v.name $v.image) -}}
-{{- end -}}
-{{ join ", " $list }}
-{{- end -}}
-
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "tektonPipelines.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "tektonPipelines.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
+ 

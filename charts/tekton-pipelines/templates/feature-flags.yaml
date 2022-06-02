@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: feature-flags
+  labels:
+    app.kubernetes.io/instance: default
+    app.kubernetes.io/part-of: tekton-pipelines
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
+data:
+  disable-affinity-assistant: {{ .Values.featureFlags.disableAffinityAssistant | quote }}
+  disable-creds-init: {{ .Values.featureFlags.disableCredsInit | quote }}
+  enable-api-fields: {{ .Values.featureFlags.enableApiFields | quote }}
+  enable-custom-tasks: {{ .Values.featureFlags.enableCustomTasks | quote }}
+  enable-tekton-oci-bundles: {{ .Values.featureFlags.enableTektonOciBundles | quote }}
+  require-git-ssh-secret-known-hosts: {{ .Values.featureFlags.requireGitSshSecretKnownHosts | quote }}
+  running-in-environment-with-injected-sidecars: {{ .Values.featureFlags.runningInEnvironmentWithInjectedSidecars | quote }}
+  send-cloudevents-for-runs: {{ .Values.featureFlags.sendCloudeventsForRuns | quote }}

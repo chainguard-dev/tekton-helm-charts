@@ -1,0 +1,82 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "tektonPipelines.fullname" . }}-controller-tenant-access
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: default
+    app.kubernetes.io/part-of: tekton-pipelines
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - persistentvolumeclaims
+  verbs:
+  - get
+  - list
+  - create
+  - update
+  - delete
+  - patch
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - update
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - limitranges
+  - secrets
+  - serviceaccounts
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  verbs:
+  - get
+  - list
+  - create
+  - update
+  - delete
+  - patch
+  - watch
+- apiGroups:
+  - resolution.tekton.dev
+  resources:
+  - resolutionrequests
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "tektonPipelines.fullname" . }}-controller-tenant-access
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: default
+    app.kubernetes.io/part-of: tekton-pipelines
+  {{- include "tektonPipelines.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: '{{ include "tektonPipelines.fullname" . }}-controller-tenant-access'
+subjects:
+- kind: ServiceAccount
+  name: '{{ include "tektonPipelines.fullname" . }}-controller'
+  namespace: '{{ .Release.Namespace }}' 
