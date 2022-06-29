@@ -50,3 +50,6 @@ spire:
   enabled: false
   socketPath: "/run/spire/sockets/agent.sock"
   mountPath: "/run/spire/sockets/agent.sock"
+
+annotations:
+  app: tekton-chains
