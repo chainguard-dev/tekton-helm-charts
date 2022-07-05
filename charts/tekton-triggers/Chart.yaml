@@ -1,0 +1,7 @@
+apiVersion: v2
+name: tekton-triggers
+description: A Helm chart for tekton triggers
+type: application
+version: 0.1.0
+appVersion: "v0.20.0"
+icon: https://github.com/tektoncd/triggers/raw/main/tekton-triggers.png

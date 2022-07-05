@@ -1,0 +1,13 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: ClusterInterceptor
+metadata:
+  name: {{ include "tekton-interceptors.fullname" . }}-gitlab
+  labels:
+  {{- include "tekton-interceptors.labels" . | nindent 4 }}
+spec:
+  clientConfig:
+    service:
+      name: tekton-triggers-core-interceptors
+      namespace: tekton-pipelines
+      path: gitlab
+      port: 8443

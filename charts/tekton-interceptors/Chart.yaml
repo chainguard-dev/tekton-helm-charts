@@ -1,0 +1,7 @@
+apiVersion: v2
+name: tekton-interceptors
+description: A Helm chart for tekton interceptors
+type: application
+version: 0.1.0
+appVersion: "v0.20.1"
+icon: https://github.com/tektoncd/triggers/raw/main/tekton-triggers.png

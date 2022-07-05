@@ -1,0 +1,12 @@
+kubernetesClusterDomain: cluster.local
+tektonTriggersCoreInterceptors:
+  ports:
+  - name: https
+    port: 8443
+    targetPort: 0
+  replicas: 1
+  tektonTriggersCoreInterceptors:
+    image:
+      repository: gcr.io/tekton-releases/github.com/tektoncd/triggers/cmd/interceptors:v0.20.1@sha256
+      tag: 65a1dbc19056050b0ca1b1a59122e1d90d2c955222ccee5e3987389a76da16ba
+  type: ClusterIP
