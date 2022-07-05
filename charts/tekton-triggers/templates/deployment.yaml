@@ -110,8 +110,7 @@ spec:
           value: "9000"
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ .Values.kubernetesClusterDomain }}
-        image: {{ .Values.controller.tektonTriggersController.image.repository }}:{{ .Values.controller.tektonTriggersController.image.tag
-          | default .Chart.AppVersion }}
+        image: {{ .Values.controller.tektonTriggersController.image.repository }}:{{ .Values.controller.tektonTriggersController.image.tag          | default .Chart.AppVersion }}
         name: tekton-triggers-controller
         resources: {}
         securityContext:
@@ -169,8 +168,7 @@ spec:
           value: tekton.dev/triggers
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ .Values.kubernetesClusterDomain }}
-        image: {{ .Values.webhook.webhook.image.repository }}:{{ .Values.webhook.webhook.image.tag
-          | default .Chart.AppVersion }}
+        image: {{ .Values.webhook.webhook.image.repository }}:{{ .Values.webhook.webhook.image.tag          | default .Chart.AppVersion }}
         name: webhook
         ports:
         - containerPort: 9000
