@@ -1,0 +1,186 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "tekton-triggers.fullname" . }}-controller
+  labels:
+    app.kubernetes.io/instance: default
+    app.kubernetes.io/part-of: tekton-triggers
+  {{- include "tekton-triggers.labels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "tekton-triggers.fullname" . }}-webhook
+  labels:
+    app.kubernetes.io/instance: default
+    app.kubernetes.io/part-of: tekton-triggers
+  {{- include "tekton-triggers.labels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "tekton-triggers.fullname" . }}-core-interceptors
+  labels:
+    app.kubernetes.io/instance: default
+    app.kubernetes.io/part-of: tekton-triggers
+  {{- include "tekton-triggers.labels" . | nindent 4 }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "tekton-triggers.fullname" . }}-controller
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: default
+    app.kubernetes.io/name: controller
+    app.kubernetes.io/part-of: tekton-triggers
+    app.kubernetes.io/version: v0.20.1
+    triggers.tekton.dev/release: v0.20.1
+  {{- include "tekton-triggers.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.controller.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: default
+      app.kubernetes.io/name: controller
+      app.kubernetes.io/part-of: tekton-triggers
+    {{- include "tekton-triggers.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: tekton-triggers-controller
+        app.kubernetes.io/component: controller
+        app.kubernetes.io/instance: default
+        app.kubernetes.io/name: controller
+        app.kubernetes.io/part-of: tekton-triggers
+        app.kubernetes.io/version: v0.20.1
+        triggers.tekton.dev/release: v0.20.1
+        version: v0.20.1
+      {{- include "tekton-triggers.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - args:
+        - -logtostderr
+        - -stderrthreshold
+        - INFO
+        - -el-image
+        - gcr.io/tekton-releases/github.com/tektoncd/triggers/cmd/eventlistenersink:v0.20.1@sha256:2d2444f334d38af93f65625eda6c6cec808b651c7424507fb7e2de7020a2a641
+        - -el-port
+        - "8080"
+        - -el-security-context=true
+        - -el-events
+        - disable
+        - -el-readtimeout
+        - "5"
+        - -el-writetimeout
+        - "40"
+        - -el-idletimeout
+        - "120"
+        - -el-timeouthandler
+        - "30"
+        - -el-httpclient-readtimeout
+        - "30"
+        - -el-httpclient-keep-alive
+        - "30"
+        - -el-httpclient-tlshandshaketimeout
+        - "10"
+        - -el-httpclient-responseheadertimeout
+        - "10"
+        - -el-httpclient-expectcontinuetimeout
+        - "1"
+        - -period-seconds
+        - "10"
+        - -failure-threshold
+        - "1"
+        env:
+        - name: SYSTEM_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: CONFIG_LOGGING_NAME
+          value: config-logging-triggers
+        - name: CONFIG_OBSERVABILITY_NAME
+          value: config-observability-triggers
+        - name: CONFIG_DEFAULTS_NAME
+          value: config-defaults-triggers
+        - name: METRICS_DOMAIN
+          value: tekton.dev/triggers
+        - name: METRICS_PROMETHEUS_PORT
+          value: "9000"
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ .Values.kubernetesClusterDomain }}
+        image: {{ .Values.controller.tektonTriggersController.image.repository }}:{{ .Values.controller.tektonTriggersController.image.tag
+          | default .Chart.AppVersion }}
+        name: tekton-triggers-controller
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 65532
+      serviceAccountName: {{ include "tekton-triggers.fullname" . }}-controller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "tekton-triggers.fullname" . }}-webhook
+  labels:
+    app.kubernetes.io/component: webhook
+    app.kubernetes.io/instance: default
+    app.kubernetes.io/name: webhook
+    app.kubernetes.io/part-of: tekton-triggers
+    app.kubernetes.io/version: v0.20.1
+    triggers.tekton.dev/release: v0.20.1
+  {{- include "tekton-triggers.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.webhook.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: webhook
+      app.kubernetes.io/instance: default
+      app.kubernetes.io/name: webhook
+      app.kubernetes.io/part-of: tekton-triggers
+    {{- include "tekton-triggers.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: tekton-triggers-webhook
+        app.kubernetes.io/component: webhook
+        app.kubernetes.io/instance: default
+        app.kubernetes.io/name: webhook
+        app.kubernetes.io/part-of: tekton-triggers
+        app.kubernetes.io/version: v0.20.1
+        triggers.tekton.dev/release: v0.20.1
+        version: v0.20.1
+      {{- include "tekton-triggers.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: SYSTEM_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: CONFIG_LOGGING_NAME
+          value: config-logging-triggers
+        - name: WEBHOOK_SERVICE_NAME
+          value: tekton-triggers-webhook
+        - name: WEBHOOK_SECRET_NAME
+          value: triggers-webhook-certs
+        - name: METRICS_DOMAIN
+          value: tekton.dev/triggers
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ .Values.kubernetesClusterDomain }}
+        image: {{ .Values.webhook.webhook.image.repository }}:{{ .Values.webhook.webhook.image.tag
+          | default .Chart.AppVersion }}
+        name: webhook
+        ports:
+        - containerPort: 9000
+          name: metrics
+        - containerPort: 8008
+          name: profiling
+        - containerPort: 8443
+          name: https-webhook
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 65532
+      serviceAccountName: {{ include "tekton-triggers.fullname" . }}-webhook

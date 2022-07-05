@@ -1,0 +1,22 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: {{ include "tekton-triggers.fullname" . }}-config.webhook.triggers.tekton.dev
+  annotations:
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "tekton-triggers.fullname" . }}-
+  labels:
+  {{- include "tekton-triggers.labels" . | nindent 4 }}
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: '{{ include "tekton-triggers.fullname" . }}-webhook'
+      namespace: '{{ .Release.Namespace }}'
+  failurePolicy: Fail
+  name: config.webhook.triggers.tekton.dev
+  namespaceSelector:
+    matchExpressions:
+    - key: triggers.tekton.dev/release
+      operator: Exists
+  sideEffects: None
