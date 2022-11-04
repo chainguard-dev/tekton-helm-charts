@@ -14,7 +14,7 @@ Charts are available in the following formats:
 The following command can be used to add the chart repository:
 
 ```shell
-helm repo add tekton https://chainguard.github.io/tekton-helm-charts
+helm repo add tekton https://chainguard-dev.github.io/tekton-helm-charts
 helm repo update
 ```
 
